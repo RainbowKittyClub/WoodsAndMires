@@ -131,7 +131,7 @@ public final class WamBiomes {
 
             DefaultBiomeFeatures.addForestGrass(builder);
             DefaultBiomeFeatures.addDefaultMushrooms(builder);
-            DefaultBiomeFeatures.addDefaultVegetation(builder);
+            DefaultBiomeFeatures.addDefaultVegetation(builder, true);
             DefaultBiomeFeatures.addSweetBerryBushes(builder);
         });
 
@@ -139,8 +139,8 @@ public final class WamBiomes {
             DefaultBiomeFeatures.addFarmAnimals(builder);
             DefaultBiomeFeatures.addBatsAndMonsters(builder);
 
-            builder.spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityType.WOLF, 5, 4, 4));
-            builder.spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityType.FOX, 4, 2, 4));
+            builder.spawn(SpawnGroup.CREATURE, 5, new SpawnSettings.SpawnEntry(EntityType.WOLF, 4, 4));
+            builder.spawn(SpawnGroup.CREATURE, 4, new SpawnSettings.SpawnEntry(EntityType.FOX, 2, 4));
         });
 
         return new Biome.Builder()
@@ -248,8 +248,8 @@ public final class WamBiomes {
         SpawnSettings spawnSettings = spawnSettings(builder -> {
             DefaultBiomeFeatures.addBatsAndMonsters(builder);
 
-            builder.spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityType.WOLF, 5, 4, 4));
-            builder.spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityType.FOX, 4, 2, 4));
+            builder.spawn(SpawnGroup.CREATURE, 5, new SpawnSettings.SpawnEntry(EntityType.WOLF, 4, 4));
+            builder.spawn(SpawnGroup.CREATURE, 4, new SpawnSettings.SpawnEntry(EntityType.FOX,2, 4));
         });
         GenerationSettings generationSettings = generationSettings(builder -> {
             OverworldBiomeCreator.addBasicFeatures(builder);
@@ -281,7 +281,7 @@ public final class WamBiomes {
             builder.feature(GenerationStep.Feature.VEGETAL_DECORATION, WamPlacedFeatureKeys.FELL_HEATHER_PATCH);
             DefaultBiomeFeatures.addForestGrass(builder);
             DefaultBiomeFeatures.addDefaultMushrooms(builder);
-            DefaultBiomeFeatures.addDefaultVegetation(builder);
+            DefaultBiomeFeatures.addDefaultVegetation(builder, true);
 
             builder.feature(GenerationStep.Feature.VEGETAL_DECORATION, WamPlacedFeatureKeys.FELL_LICHEN);
             builder.feature(GenerationStep.Feature.VEGETAL_DECORATION, WamPlacedFeatureKeys.FELL_MOSS_PATCH);
@@ -307,15 +307,15 @@ public final class WamBiomes {
             DefaultBiomeFeatures.addDefaultOres(builder);
             DefaultBiomeFeatures.addDefaultDisks(builder);
             builder.feature(GenerationStep.Feature.VEGETAL_DECORATION, WamPlacedFeatureKeys.PINY_GROVE_TREES);
-            DefaultBiomeFeatures.addDefaultVegetation(builder);
+            DefaultBiomeFeatures.addDefaultVegetation(builder, true);
             DefaultBiomeFeatures.addEmeraldOre(builder);
             DefaultBiomeFeatures.addInfestedStone(builder);
         });
         SpawnSettings spawnSettings = spawnSettings(builder -> {
             DefaultBiomeFeatures.addFarmAnimals(builder);
-            builder.spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityType.WOLF, 8, 4, 4))
-                .spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityType.RABBIT, 4, 2, 3))
-                .spawn(SpawnGroup.CREATURE, new SpawnSettings.SpawnEntry(EntityType.FOX, 8, 2, 4));
+            builder.spawn(SpawnGroup.CREATURE, 8, new SpawnSettings.SpawnEntry(EntityType.WOLF, 4, 4))
+                .spawn(SpawnGroup.CREATURE, 4, new SpawnSettings.SpawnEntry(EntityType.RABBIT, 2, 3))
+                .spawn(SpawnGroup.CREATURE, 8, new SpawnSettings.SpawnEntry(EntityType.FOX,  2, 4));
             DefaultBiomeFeatures.addBatsAndMonsters(builder);
         });
         return new Biome.Builder()

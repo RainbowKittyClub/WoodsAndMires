@@ -26,7 +26,8 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.collection.Pool;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.VerticalSurfaceType;
 import net.minecraft.util.math.floatprovider.UniformFloatProvider;
@@ -112,7 +113,7 @@ public final class WamConfiguredFeatures {
                         new AgedTrunkTreeDecorator(WamBlocks.AGED_PINE_LOG, UniformFloatProvider.create(0.5f, 0.85f)),
                         new AlterGroundTreeDecorator(
                             new WeightedBlockStateProvider(
-                                DataPool.<BlockState>builder()
+                                Pool.<BlockState>builder()
                                     .add(Blocks.GRASS_BLOCK.getDefaultState(), 1)
                                     .add(Blocks.PODZOL.getDefaultState(), 1)
                             )
@@ -193,7 +194,7 @@ public final class WamConfiguredFeatures {
                 UniformFloatProvider.create(-0.2f, 1.2f),
                 UniformIntProvider.create(2, 6),
                 new WeightedBlockStateProvider(
-                    DataPool.<BlockState>builder()
+                    Pool.<BlockState>builder()
                         .add(Blocks.AIR.getDefaultState(), 3)
                         .add(Blocks.BROWN_MUSHROOM.getDefaultState(), 1)
                         .add(Blocks.RED_MUSHROOM.getDefaultState(), 1)
@@ -233,7 +234,7 @@ public final class WamConfiguredFeatures {
     }
 
     private static TreeDecorator createPineTrunkDecorator() {
-        DataPool.Builder<TreeDecorator> trunkDecorators = DataPool.builder();
+        Pool.Builder<TreeDecorator> trunkDecorators = Pool.builder();
         trunkDecorators.add(
             new ChanceTreeDecorator(
                 new AgedTrunkTreeDecorator(WamBlocks.AGED_PINE_LOG, UniformFloatProvider.create(0.3f, 0.65f)),
@@ -253,7 +254,7 @@ public final class WamConfiguredFeatures {
             decorators.add(
                 new AlterGroundTreeDecorator(
                     new WeightedBlockStateProvider(
-                        DataPool.<BlockState>builder()
+                        Pool.<BlockState>builder()
                             .add(Blocks.GRASS_BLOCK.getDefaultState(), grassWeight)
                             .add(Blocks.PODZOL.getDefaultState(), podzolWeight)
                     )
@@ -296,7 +297,7 @@ public final class WamConfiguredFeatures {
         register(WamConfiguredFeatureKeys.MIRE_FLOWERS, Feature.FLOWER,
             VegetationConfiguredFeatures.createRandomPatchFeatureConfig(
                 new WeightedBlockStateProvider(
-                    DataPool.<BlockState>builder()
+                    Pool.<BlockState>builder()
                         .add(Blocks.BLUE_ORCHID.getDefaultState(), 1)
                         .add(WamBlocks.TANSY.getDefaultState(), 1)
                 ),
@@ -306,7 +307,7 @@ public final class WamConfiguredFeatures {
         register(WamConfiguredFeatureKeys.MIRE_MEADOW, WamFeatures.MEADOW,
             new MeadowFeatureConfig(
                 new WeightedBlockStateProvider(
-                    DataPool.<BlockState>builder()
+                    Pool.<BlockState>builder()
                         .add(Blocks.SHORT_GRASS.getDefaultState(), 5)
                         .add(Blocks.FERN.getDefaultState(), 1)
                 ),
@@ -336,7 +337,7 @@ public final class WamConfiguredFeatures {
                 .border(BlockStateProvider.of(Blocks.STONE))
                 .bottomBlock(
                     new WeightedBlockStateProvider(
-                        DataPool.<BlockState>builder()
+                        Pool.<BlockState>builder()
                             .add(Blocks.EMERALD_ORE.getDefaultState(), 1)
                             .add(Blocks.GOLD_ORE.getDefaultState(), 1)
                     ),
@@ -361,7 +362,7 @@ public final class WamConfiguredFeatures {
         var fellMossPatchVegetation = register(WamConfiguredFeatureKeys.FELL_MOSS_PATCH_VEGETATION, Feature.SIMPLE_BLOCK,
             new SimpleBlockFeatureConfig(
                 new WeightedBlockStateProvider(
-                    new DataPool.Builder<BlockState>()
+                    new Pool.Builder<BlockState>()
                         .add(Blocks.MOSS_CARPET.getDefaultState(), 5)
                         .add(WamBlocks.FELL_LICHEN.getDefaultState(), 2)
                         .add(WamBlocks.HEATHER.getDefaultState(), 1)
@@ -385,7 +386,7 @@ public final class WamConfiguredFeatures {
         register(WamConfiguredFeatureKeys.FROZEN_TREASURE, WamFeatures.FROZEN_TREASURE,
             new FrozenTreasureFeatureConfig(
                 new WeightedBlockStateProvider(
-                    DataPool.<BlockState>builder()
+                    Pool.<BlockState>builder()
                         .add(Blocks.PACKED_ICE.getDefaultState(), 3)
                         .add(Blocks.BLUE_ICE.getDefaultState(), 1)
                 ),

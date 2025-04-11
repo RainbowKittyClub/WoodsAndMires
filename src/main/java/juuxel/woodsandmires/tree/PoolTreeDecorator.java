@@ -3,20 +3,20 @@ package juuxel.woodsandmires.tree;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.collection.DataPool;
+import net.minecraft.util.collection.Pool;
 import net.minecraft.world.gen.treedecorator.TreeDecorator;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 
 public final class PoolTreeDecorator extends TreeDecorator {
     public static final MapCodec<PoolTreeDecorator> CODEC = RecordCodecBuilder.mapCodec(builder ->
         builder.group(
-            DataPool.createCodec(TreeDecorator.TYPE_CODEC).fieldOf("decorators")
+            Pool.createCodec(TreeDecorator.TYPE_CODEC).fieldOf("decorators")
                 .forGetter(PoolTreeDecorator::getDecorators)
         ).apply(builder, PoolTreeDecorator::new)
     );
-    private final DataPool<TreeDecorator> decorators;
+    private final Pool<TreeDecorator> decorators;
 
-    public PoolTreeDecorator(DataPool<TreeDecorator> decorators) {
+    public PoolTreeDecorator(Pool<TreeDecorator> decorators) {
         if (decorators.isEmpty()) {
             throw new IllegalArgumentException("Cannot create PoolTreeDecorator with an empty pool!");
         }
@@ -24,7 +24,7 @@ public final class PoolTreeDecorator extends TreeDecorator {
         this.decorators = decorators;
     }
 
-    public DataPool<TreeDecorator> getDecorators() {
+    public Pool<TreeDecorator> getDecorators() {
         return decorators;
     }
 
@@ -35,7 +35,7 @@ public final class PoolTreeDecorator extends TreeDecorator {
 
     @Override
     public void generate(Generator generator) {
-        decorators.getDataOrEmpty(generator.getRandom())
+        decorators.getOrEmpty(generator.getRandom())
             .orElseThrow(IllegalStateException::new)
             .generate(generator);
     }
