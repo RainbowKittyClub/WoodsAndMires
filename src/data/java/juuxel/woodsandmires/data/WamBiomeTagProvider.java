@@ -3,7 +3,8 @@ package juuxel.woodsandmires.data;
 import juuxel.woodsandmires.biome.WamBiomeKeys;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags;
+import net.minecraft.data.tag.ProvidedTagBuilder;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -24,49 +25,49 @@ public final class WamBiomeTagProvider extends FabricTagProvider<Biome> {
     protected void configure(RegistryWrapper.WrapperLookup arg) {
         // Vanilla tags
         generateOverworld(BiomeTags.IS_OVERWORLD);
-        getOrCreateTagBuilder(BiomeTags.IS_FOREST)
+        builder(BiomeTags.IS_FOREST)
             .add(WamBiomeKeys.PINE_FOREST)
             .add(WamBiomeKeys.OLD_GROWTH_PINE_FOREST)
             .add(WamBiomeKeys.SNOWY_PINE_FOREST)
             .add(WamBiomeKeys.LUSH_PINE_FOREST)
             .add(WamBiomeKeys.PINY_GROVE);
-        getOrCreateTagBuilder(BiomeTags.IS_HILL)
+        builder(BiomeTags.IS_HILL)
             .add(WamBiomeKeys.SNOWY_PINE_FOREST);
-        getOrCreateTagBuilder(BiomeTags.IS_MOUNTAIN)
+        builder(BiomeTags.IS_MOUNTAIN)
             .add(WamBiomeKeys.FELL)
             .add(WamBiomeKeys.SNOWY_FELL);
-        getOrCreateTagBuilder(BiomeTags.IS_TAIGA)
+        builder(BiomeTags.IS_TAIGA)
             .add(WamBiomeKeys.PINE_FOREST)
             .add(WamBiomeKeys.OLD_GROWTH_PINE_FOREST)
             .add(WamBiomeKeys.SNOWY_PINE_FOREST);
         generateOverworld(BiomeTags.STRONGHOLD_HAS_STRUCTURE);
-        getOrCreateTagBuilder(BiomeTags.PILLAGER_OUTPOST_HAS_STRUCTURE)
+        builder(BiomeTags.PILLAGER_OUTPOST_HAS_STRUCTURE)
             .add(WamBiomeKeys.PINE_FOREST)
             .add(WamBiomeKeys.PINY_GROVE);
 
         // Common tags
-        generateOverworld(ConventionalBiomeTags.IN_OVERWORLD);
-        getOrCreateTagBuilder(ConventionalBiomeTags.CLIMATE_COLD)
+        generateOverworld(ConventionalBiomeTags.IS_OVERWORLD);
+        builder(ConventionalBiomeTags.IS_COLD_OVERWORLD)
             .add(WamBiomeKeys.PINE_FOREST)
             .add(WamBiomeKeys.SNOWY_PINE_FOREST)
             .add(WamBiomeKeys.OLD_GROWTH_PINE_FOREST)
             .add(WamBiomeKeys.FELL)
             .add(WamBiomeKeys.SNOWY_FELL)
             .add(WamBiomeKeys.PINY_GROVE);
-        getOrCreateTagBuilder(ConventionalBiomeTags.CLIMATE_TEMPERATE)
+        builder(ConventionalBiomeTags.IS_TEMPERATE_OVERWORLD)
             .add(WamBiomeKeys.LUSH_PINE_FOREST);
-        forEachTag(ConventionalBiomeTags.CLIMATE_WET, ConventionalBiomeTags.SWAMP)
+        forEachTag(ConventionalBiomeTags.IS_WET_OVERWORLD, ConventionalBiomeTags.IS_SWAMP)
             .add(WamBiomeKeys.PINE_MIRE);
-        getOrCreateTagBuilder(ConventionalBiomeTags.EXTREME_HILLS)
+        builder(ConventionalBiomeTags.IS_HILL)
             .add(WamBiomeKeys.SNOWY_PINE_FOREST)
             .add(WamBiomeKeys.FELL)
             .add(WamBiomeKeys.SNOWY_FELL);
-        getOrCreateTagBuilder(ConventionalBiomeTags.MOUNTAIN_PEAK)
+        builder(ConventionalBiomeTags.IS_MOUNTAIN_PEAK)
             .add(WamBiomeKeys.FELL)
             .add(WamBiomeKeys.SNOWY_FELL);
-        getOrCreateTagBuilder(ConventionalBiomeTags.MOUNTAIN_SLOPE)
+        builder(ConventionalBiomeTags.IS_MOUNTAIN_SLOPE)
             .add(WamBiomeKeys.SNOWY_PINE_FOREST);
-        getOrCreateTagBuilder(ConventionalBiomeTags.SNOWY)
+        builder(ConventionalBiomeTags.IS_SNOWY)
             .add(WamBiomeKeys.SNOWY_PINE_FOREST)
             .add(WamBiomeKeys.SNOWY_FELL)
             .add(WamBiomeKeys.PINY_GROVE);
@@ -74,18 +75,18 @@ public final class WamBiomeTagProvider extends FabricTagProvider<Biome> {
 
     @SafeVarargs
     private MultiBuilder<Biome> forEachTag(TagKey<Biome>... tags) {
-        return new MultiBuilder<>(Stream.of(tags).map(this::getOrCreateTagBuilder).toList());
+        return new MultiBuilder<>(Stream.of(tags).map(this::builder).toList());
     }
 
     private void generateOverworld(TagKey<Biome> tag) {
-        FabricTagBuilder tagBuilder = getOrCreateTagBuilder(tag);
+        var tagBuilder = builder(tag);
         WamBiomeKeys.ALL.stream().forEach(tagBuilder::add);
     }
 
     static final class MultiBuilder<T> {
-        private final List<FabricTagProvider<T>.FabricTagBuilder> builders;
+        private final List<ProvidedTagBuilder<RegistryKey<T>, T>> builders;
 
-        private MultiBuilder(List<FabricTagProvider<T>.FabricTagBuilder> builders) {
+        private MultiBuilder(List<ProvidedTagBuilder<RegistryKey<T>, T>> builders) {
             this.builders = builders;
         }
 

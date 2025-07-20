@@ -17,12 +17,12 @@ import net.minecraft.client.render.entity.model.BoatEntityModel;
 public final class WoodsAndMiresClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        WamBlocksClient.init();
+        //WamBlocksClient.init();
 
-        for (WamBoat boat : WamBoat.values()) {
-            registerBoatModel(true, boat);
-            registerBoatModel(false, boat);
-        }
+        //for (WamBoat boat : WamBoat.values()) {
+        //    registerBoatModel(true, boat);
+        //    registerBoatModel(false, boat);
+       // }
     }
 
     private static void registerBoatModel(boolean chest, WamBoat boat) {

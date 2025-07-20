@@ -1,6 +1,5 @@
 package juuxel.woodsandmires.client;
 
-import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.block.BlockColors;
@@ -12,7 +11,7 @@ import static juuxel.woodsandmires.block.WamBlocks.*;
 
 public final class WamBlocksClient {
     public static void init() {
-        BlockRenderLayerMap.INSTANCE.putBlocks(
+        /*BlockRenderLayerMap.INSTANCE.putBlocks(
             RenderLayer.getCutoutMipped(),
             PINE_LEAVES
         );
@@ -28,7 +27,7 @@ public final class WamBlocksClient {
             POTTED_FELL_LICHEN,
             HEATHER,
             POTTED_HEATHER
-        );
+        );*/
 
         /*ColorProviderRegistry.ITEM.register(
             (stack, tintIndex) -> {
