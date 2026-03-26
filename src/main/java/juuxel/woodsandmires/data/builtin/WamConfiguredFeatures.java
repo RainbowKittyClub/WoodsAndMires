@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.WeightedPlacedFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RuleBasedStateProvider;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -89,12 +90,13 @@ public final class WamConfiguredFeatures {
                     List.of(
                         new AgedTrunkTreeDecorator(WamBlocks.AGED_PINE_LOG, UniformFloat.of(0.5f, 0.85f)),
                         new AlterGroundDecorator(
-                            new WeightedStateProvider(
-                                WeightedList.<BlockState>builder()
-                                    .add(Blocks.GRASS_BLOCK.defaultBlockState(), 1)
-                                    .add(Blocks.PODZOL.defaultBlockState(), 1)
-                            )
-                        )
+                            RuleBasedStateProvider.ifTrueThenProvide(BlockPredicate.matchesTag(BlockTags.BENEATH_TREE_PODZOL_REPLACEABLE),
+                                new WeightedStateProvider(
+                                    WeightedList.<BlockState>builder()
+                                        .add(Blocks.GRASS_BLOCK.defaultBlockState(), 1)
+                                        .add(Blocks.PODZOL.defaultBlockState(), 1)
+                                )
+                            ))
                     )
                 )
                 .build()
@@ -132,18 +134,20 @@ public final class WamConfiguredFeatures {
                 new TwoLayersFeatureSize(2, 0, 2)
             ).ignoreVines().decorators(List.of(createPineTrunkDecorator())).build()
         );
-        register(WamConfiguredFeatureKeys.PINE_FOREST_BOULDER, Feature.FOREST_ROCK,
-            new BlockStateConfiguration(Blocks.STONE.defaultBlockState())
-        );
-        register(WamConfiguredFeatureKeys.FOREST_TANSY, Feature.RANDOM_PATCH,
-            FeatureUtils.simplePatchConfiguration(
-                Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(WamBlocks.TANSY))
+        register(WamConfiguredFeatureKeys.PINE_FOREST_BOULDER,
+            Feature.BLOCK_BLOB,
+            new BlockBlobConfiguration(
+                Blocks.STONE.defaultBlockState(),
+                BlockPredicate.matchesTag(BlockTags.FOREST_ROCK_CAN_PLACE_ON)
             )
         );
-        register(WamConfiguredFeatureKeys.HEATHER_PATCH, Feature.RANDOM_PATCH,
-            FeatureUtils.simplePatchConfiguration(
-                Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(WamBlocks.HEATHER))
-            )
+        register(
+            WamConfiguredFeatureKeys.FOREST_TANSY,
+            Feature.SIMPLE_BLOCK,
+            new SimpleBlockConfiguration(BlockStateProvider.simple(WamBlocks.TANSY))
+        );
+        register(WamConfiguredFeatureKeys.HEATHER_PATCH, Feature.SIMPLE_BLOCK,
+            new SimpleBlockConfiguration(BlockStateProvider.simple(WamBlocks.HEATHER))
         );
         var lessPodzolPine = register(WamConfiguredFeatureKeys.LESS_PODZOL_PINE, Feature.TREE, pineTree(3, 1));
         noPodzolPine = register(WamConfiguredFeatureKeys.NO_PODZOL_PINE, Feature.TREE, pineTree(1, 0));
@@ -230,10 +234,13 @@ public final class WamConfiguredFeatures {
         if (podzolWeight > 0) {
             decorators.add(
                 new AlterGroundDecorator(
-                    new WeightedStateProvider(
-                        WeightedList.<BlockState>builder()
-                            .add(Blocks.GRASS_BLOCK.defaultBlockState(), grassWeight)
-                            .add(Blocks.PODZOL.defaultBlockState(), podzolWeight)
+                    RuleBasedStateProvider.ifTrueThenProvide(
+                        BlockPredicate.matchesTag(BlockTags.BENEATH_TREE_PODZOL_REPLACEABLE),
+                        new WeightedStateProvider(
+                            WeightedList.<BlockState>builder()
+                                .add(Blocks.GRASS_BLOCK.defaultBlockState(), grassWeight)
+                                .add(Blocks.PODZOL.defaultBlockState(), podzolWeight)
+                        )
                     )
                 )
             );
@@ -256,7 +263,7 @@ public final class WamConfiguredFeatures {
     }
 
     private static PlacementModifier[] getTreeOnSnowPlacementModifiers() {
-        return new PlacementModifier[] {
+        return new PlacementModifier[]{
             EnvironmentScanPlacement.scanningFor(
                 Direction.UP,
                 BlockPredicate.not(BlockPredicate.matchesBlocks(Blocks.POWDER_SNOW)),
@@ -271,14 +278,13 @@ public final class WamConfiguredFeatures {
 
     private void registerMires() {
         register(WamConfiguredFeatureKeys.MIRE_PONDS, WamFeatures.MIRE_PONDS);
-        register(WamConfiguredFeatureKeys.MIRE_FLOWERS, Feature.FLOWER,
-            VegetationFeatures.grassPatch(
+        register(WamConfiguredFeatureKeys.MIRE_FLOWERS, Feature.SIMPLE_BLOCK,
+            new SimpleBlockConfiguration(
                 new WeightedStateProvider(
                     WeightedList.<BlockState>builder()
                         .add(Blocks.BLUE_ORCHID.defaultBlockState(), 1)
                         .add(WamBlocks.TANSY.defaultBlockState(), 1)
-                ),
-                64
+                )
             )
         );
         register(WamConfiguredFeatureKeys.MIRE_MEADOW, WamFeatures.MEADOW,
@@ -303,8 +309,13 @@ public final class WamConfiguredFeatures {
                 0.3f
             )
         );
-        register(WamConfiguredFeatureKeys.FELL_BOULDER, Feature.FOREST_ROCK,
-            new BlockStateConfiguration(Blocks.COBBLESTONE.defaultBlockState())
+        register(
+            WamConfiguredFeatureKeys.FELL_BOULDER,
+            Feature.BLOCK_BLOB,
+            new BlockBlobConfiguration(
+                Blocks.COBBLESTONE.defaultBlockState(),
+                BlockPredicate.matchesTag(BlockTags.FOREST_ROCK_CAN_PLACE_ON)
+            )
         );
         register(WamConfiguredFeatureKeys.FELL_POND, WamFeatures.FELL_POND,
             new FellPondFeatureConfig.Builder()
@@ -329,12 +340,10 @@ public final class WamConfiguredFeatures {
                 1, 1, 0.7f
             )
         );
-        register(WamConfiguredFeatureKeys.FELL_LICHEN, Feature.RANDOM_PATCH,
-            FeatureUtils.simplePatchConfiguration(
-                Feature.SIMPLE_BLOCK,
-                new SimpleBlockConfiguration(BlockStateProvider.simple(WamBlocks.FELL_LICHEN)),
-                List.of(Blocks.STONE)
-            )
+        register(
+            WamConfiguredFeatureKeys.FELL_LICHEN,
+            Feature.SIMPLE_BLOCK,
+            new SimpleBlockConfiguration(BlockStateProvider.simple(WamBlocks.FELL_LICHEN))
         );
         var fellMossPatchVegetation = register(WamConfiguredFeatureKeys.FELL_MOSS_PATCH_VEGETATION, Feature.SIMPLE_BLOCK,
             new SimpleBlockConfiguration(
@@ -403,6 +412,6 @@ public final class WamConfiguredFeatures {
     }
 
     private static Holder<PlacedFeature> createFlowerPatchFeature(Block block) {
-        return PlacementUtils.onlyWhenEmpty(Feature.RANDOM_PATCH, VegetationFeatures.grassPatch(BlockStateProvider.simple(block), 64));
+        return PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(block)));
     }
 }

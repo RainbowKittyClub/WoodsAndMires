@@ -2,6 +2,7 @@ package juuxel.woodsandmires.feature;
 
 import com.mojang.serialization.Codec;
 import juuxel.woodsandmires.block.ShrubLogBlock;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -23,7 +24,7 @@ public class ShrubFeature extends Feature<ShrubFeatureConfig> {
         var random = context.random();
 
         BlockPos below = pos.below();
-        if (!isGrassOrDirt(world, below) || !world.getBlockState(below).isFaceSturdy(world, below, Direction.UP)) {
+        if (!world.isStateAtPosition(below, blockState -> blockState.is(BlockTags.DIRT)) || !world.getBlockState(below).isFaceSturdy(world, below, Direction.UP)) {
             return false;
         }
 

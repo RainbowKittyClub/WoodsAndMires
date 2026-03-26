@@ -1,6 +1,6 @@
 package juuxel.woodsandmires.client;
 
-import com.terraformersmc.terraform.boat.api.client.TerraformBoatClientHelper;
+import com.terraformersmc.terraform.boat.api.TerraformBoatClientHelper;
 import juuxel.woodsandmires.WoodsAndMires;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;

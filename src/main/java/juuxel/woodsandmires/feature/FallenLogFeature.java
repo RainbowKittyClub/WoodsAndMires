@@ -2,6 +2,7 @@ package juuxel.woodsandmires.feature;
 
 import com.mojang.serialization.Codec;
 import juuxel.woodsandmires.block.AgedLogBlock;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -69,7 +70,7 @@ public class FallenLogFeature extends Feature<FallenLogFeatureConfig> {
 
         for (BlockPos.MutableBlockPos pos : trunkPositions) {
             pos.move(Direction.UP);
-            BlockState state = config.topDecoration().getState(random, pos);
+            BlockState state = config.topDecoration().getState(context.level(), random, pos);
             if (!state.isAir() && state.canSurvive(context.level(), pos)) {
                 setBlock(context.level(), pos, state);
             }
@@ -81,7 +82,7 @@ public class FallenLogFeature extends Feature<FallenLogFeatureConfig> {
     private static boolean canPlace(LevelSimulatedReader world, BlockPos.MutableBlockPos mut) {
         if (!world.isStateAtPosition(mut, BlockState::isAir)) return false;
         mut.move(0, -1, 0);
-        boolean result = isGrassOrDirt(world, mut);
+        boolean result = world.isStateAtPosition(mut, blockState -> blockState.is(BlockTags.DIRT));
         mut.move(0, 1, 0);
         return result;
     }

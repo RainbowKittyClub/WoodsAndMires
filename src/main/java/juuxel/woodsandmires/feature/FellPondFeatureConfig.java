@@ -3,6 +3,7 @@ package juuxel.woodsandmires.feature;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
@@ -13,8 +14,8 @@ public record FellPondFeatureConfig(IntProvider radius, IntProvider depth, Block
                                     BlockStateProvider bottomBlock, float bottomReplaceChance) implements FeatureConfiguration {
     public static final Codec<FellPondFeatureConfig> CODEC = RecordCodecBuilder.create(
         instance -> instance.group(
-            IntProvider.POSITIVE_CODEC.fieldOf("radius").forGetter(FellPondFeatureConfig::radius),
-            IntProvider.POSITIVE_CODEC.fieldOf("depth").forGetter(FellPondFeatureConfig::depth),
+            IntProviders.POSITIVE_CODEC.fieldOf("radius").forGetter(FellPondFeatureConfig::radius),
+            IntProviders.POSITIVE_CODEC.fieldOf("depth").forGetter(FellPondFeatureConfig::depth),
             BlockStateProvider.CODEC.fieldOf("fill_block").forGetter(FellPondFeatureConfig::fillBlock),
             BlockStateProvider.CODEC.fieldOf("border").forGetter(FellPondFeatureConfig::border),
             BlockStateProvider.CODEC.fieldOf("bottom_block").forGetter(FellPondFeatureConfig::bottomBlock),

@@ -4,8 +4,8 @@ import juuxel.woodsandmires.block.WamBlocks;
 import juuxel.woodsandmires.data.builtin.CommonItemTags;
 import juuxel.woodsandmires.item.WamItemTags;
 import juuxel.woodsandmires.item.WamItems;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -14,8 +14,8 @@ import net.minecraft.tags.ItemTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public final class WamItemTagProvider extends FabricTagProvider.ItemTagProvider {
-    public WamItemTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+public final class WamItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
+    public WamItemTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture, null);
     }
 

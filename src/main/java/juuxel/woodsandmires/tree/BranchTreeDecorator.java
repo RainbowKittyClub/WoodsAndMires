@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import juuxel.woodsandmires.block.BranchBlock;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -50,7 +51,7 @@ public final class BranchTreeDecorator extends TreeDecorator {
 
         for (BlockPos pos : generator.logs()) {
             // Don't replace the dirt underneath the trunk
-            if (generator.level().isStateAtPosition(pos, Feature::isDirt)) continue;
+            if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.DIRT))) continue;
 
             mut.set(pos);
 

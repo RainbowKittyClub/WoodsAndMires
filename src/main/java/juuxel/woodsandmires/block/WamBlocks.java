@@ -80,10 +80,10 @@ public final class WamBlocks {
         StrippableBlockRegistry.register(AGED_PINE_LOG, STRIPPED_PINE_LOG);
         StrippableBlockRegistry.register(PINE_WOOD, STRIPPED_PINE_WOOD);
         StrippableBlockRegistry.register(AGED_PINE_WOOD, STRIPPED_PINE_WOOD);
-        BlockEntityType.SIGN.addSupportedBlock(PINE_SIGN);
-        BlockEntityType.SIGN.addSupportedBlock(PINE_WALL_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(PINE_HANGING_SIGN);
-        BlockEntityType.HANGING_SIGN.addSupportedBlock(PINE_WALL_HANGING_SIGN);
+        BlockEntityType.SIGN.addValidBlock(PINE_SIGN);
+        BlockEntityType.SIGN.addValidBlock(PINE_WALL_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(PINE_HANGING_SIGN);
+        BlockEntityType.HANGING_SIGN.addValidBlock(PINE_WALL_HANGING_SIGN);
     }
 
     private static Block register(String id, Function<BlockBehaviour.Properties, Block> block) {

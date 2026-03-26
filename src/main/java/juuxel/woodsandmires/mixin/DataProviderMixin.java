@@ -18,7 +18,7 @@ import java.nio.file.Path;
 @Mixin(DataProvider.class)
 interface DataProviderMixin {
     @Inject(
-        method = "method_46567",
+        method = "lambda$saveStable$0",
         at = @At(value = "INVOKE", target = "Lcom/google/gson/stream/JsonWriter;close()V", ordinal = 0)
     )
     private static void addNewLine(JsonElement json, CachedOutput writer, Path path, CallbackInfo info,

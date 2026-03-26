@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.14-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
     id "me.modmuss50.mod-publish-plugin" version "1.1.0"
     id 'maven-publish'
 }
@@ -53,26 +53,25 @@ repositories {
 dependencies {
     //to change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation("com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_api_version}")
+    implementation("com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_api_version}")
 
-    modImplementation "com.github.glitchfiend:TerraBlender-fabric:$project.terrablender_version"
+    implementation "com.github.glitchfiend:TerraBlender-fabric:$project.terrablender_version"
     implementation include("com.typesafe:config:$project.typesafe_config_version")
 
-    modImplementation "eu.pb4:polymer-resource-pack:$project.polymer_version"
-    modImplementation "eu.pb4:polymer-resource-pack-extras:$project.polymer_version"
+    implementation "eu.pb4:polymer-resource-pack:$project.polymer_version"
+    implementation "eu.pb4:polymer-resource-pack-extras:$project.polymer_version"
 
     // Used for sorting features in the data generator
     implementation "org.jgrapht:jgrapht-core:$project.jgrapht_version"
 }
 
 publishMods {
-    file = remapJar.archiveFile
+    file = jar.archiveFile
     type = STABLE
     changelog = providers.environmentVariable("CHANGELOG").getOrElse("No changelog provided")
 
@@ -96,8 +95,8 @@ processResources {
 java {
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 // ensure that the encoding is set to UTF-8, no matter what the system default is
@@ -105,7 +104,7 @@ java {
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
-    options.release = 21
+    options.release = 25
 }
 
 jar {

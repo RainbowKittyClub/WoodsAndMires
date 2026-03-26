@@ -1,6 +1,7 @@
 package juuxel.woodsandmires.feature;
 
 import com.mojang.serialization.Codec;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
@@ -44,7 +45,7 @@ public class MirePondsFeature extends Feature<NoneFeatureConfiguration> {
                 int y = world.getHeight(Heightmap.Types.MOTION_BLOCKING, xo, zo) - 1;
                 mut.set(xo, y, zo);
 
-                if (isGrassOrDirt(world, mut) && isSolidOrWaterAround(world, mut)) {
+                if (world.isStateAtPosition(mut, blockState -> blockState.is(BlockTags.DIRT)) && isSolidOrWaterAround(world, mut)) {
                     setBlock(world, mut, water);
                     generated = true;
 

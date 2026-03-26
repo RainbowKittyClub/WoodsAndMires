@@ -1,9 +1,9 @@
 package juuxel.woodsandmires.data;
 
 import juuxel.woodsandmires.data.builtin.WamConfiguredFeatures;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableSubProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -18,8 +18,8 @@ import net.minecraft.core.HolderLookup;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public final class WamChestLootTableProvider extends SimpleFabricLootTableProvider {
-    public WamChestLootTableProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+public final class WamChestLootTableProvider extends SimpleFabricLootTableSubProvider {
+    public WamChestLootTableProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(output, registryLookup, LootContextParamSets.CHEST);
     }
 
@@ -38,7 +38,7 @@ public final class WamChestLootTableProvider extends SimpleFabricLootTableProvid
                 .withPool(
                     LootPool.lootPool()
                         .setRolls(UniformGenerator.between(1, 2))
-                        .add(TagEntry.expandTag(ConventionalItemTags.EMERALDS))
+                        .add(TagEntry.expandTag(ConventionalItemTags.EMERALD_GEMS))
                         .add(LootItem.lootTableItem(Items.NAME_TAG))
                 )
                 .withPool(

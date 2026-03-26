@@ -1,17 +1,17 @@
 package juuxel.woodsandmires.data.builtin;
 
-import com.google.common.collect.ImmutableList;
 import juuxel.woodsandmires.block.WamBlocks;
 import juuxel.woodsandmires.feature.WamConfiguredFeatureKeys;
 import juuxel.woodsandmires.feature.WamPlacedFeatureKeys;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Util;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.util.valueproviders.ClampedInt;
-import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
@@ -20,10 +20,6 @@ import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import java.util.List;
 
 public final class WamPlacedFeatures {
-    private static List<PlacementModifier> cons(PlacementModifier head, List<PlacementModifier> tail) {
-        return ImmutableList.<PlacementModifier>builder().add(head).addAll(tail).build();
-    }
-
     private static List<PlacementModifier> treeModifiers(PlacementModifier countModifier) {
         return VegetationPlacements.treePlacement(countModifier);
     }
@@ -57,7 +53,17 @@ public final class WamPlacedFeatures {
 
     private static void registerMires(BootstrapContext<PlacedFeature> registerable) {
         register(registerable, WamPlacedFeatureKeys.MIRE_PONDS, WamConfiguredFeatureKeys.MIRE_PONDS, List.of(BiomeFilter.biome()));
-        register(registerable, WamPlacedFeatureKeys.MIRE_FLOWERS, WamConfiguredFeatureKeys.MIRE_FLOWERS, chanceModifiers(2));
+        register(registerable, WamPlacedFeatureKeys.MIRE_FLOWERS, WamConfiguredFeatureKeys.MIRE_FLOWERS,
+            Util.copyAndAdd(
+                chanceModifiers(2),
+                InSquarePlacement.spread(),
+                RandomOffsetPlacement.ofTriangle(7, 3),
+                CountPlacement.of(64),
+                BlockPredicateFilter.forPredicate(
+                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.TANSY.defaultBlockState(), BlockPos.ZERO))
+                )
+            )
+        );
         register(registerable, WamPlacedFeatureKeys.MIRE_MEADOW, WamConfiguredFeatureKeys.MIRE_MEADOW, List.of(BiomeFilter.biome()));
         register(registerable, WamPlacedFeatureKeys.MIRE_PINE_SNAG, WamConfiguredFeatureKeys.PINE_SNAG, treeModifiersWithWouldSurvive(RarityFilter.onAverageOnceEvery(6), WamBlocks.PINE_SAPLING));
         register(registerable, WamPlacedFeatureKeys.MIRE_PINE_SHRUB, WamConfiguredFeatureKeys.SHORT_PINE_SHRUB,
@@ -73,15 +79,15 @@ public final class WamPlacedFeatures {
         register(registerable, WamPlacedFeatureKeys.FELL_BOULDER, WamConfiguredFeatureKeys.FELL_BOULDER, chanceModifiers(16));
         register(registerable, WamPlacedFeatureKeys.FELL_POND, WamConfiguredFeatureKeys.FELL_POND, chanceModifiers(7));
         register(registerable, WamPlacedFeatureKeys.FELL_BIRCH_SHRUB, WamConfiguredFeatureKeys.FELL_BIRCH_SHRUB,
-            cons(
+            Util.copyAndAdd(
                 RarityFilter.onAverageOnceEvery(3),
                 treeModifiersWithWouldSurvive(
-                    PlacementUtils.countExtra(1, 1/3f, 2),
+                    PlacementUtils.countExtra(1, 1 / 3f, 2),
                     Blocks.BIRCH_SAPLING
                 )
             )
         );
-        register(registerable, WamPlacedFeatureKeys.FELL_LICHEN, WamConfiguredFeatureKeys.FELL_LICHEN, chanceModifiers(2));
+        register(registerable, WamPlacedFeatureKeys.FELL_LICHEN, WamConfiguredFeatureKeys.FELL_LICHEN, Util.copyAndAdd(chanceModifiers(2), RandomOffsetPlacement.ofTriangle(7, 3), CountPlacement.of(96)));
         register(registerable, WamPlacedFeatureKeys.FELL_MOSS_PATCH, WamConfiguredFeatureKeys.FELL_MOSS_PATCH, chanceModifiers(5));
         register(registerable, WamPlacedFeatureKeys.FROZEN_TREASURE, WamConfiguredFeatureKeys.FROZEN_TREASURE, countModifiers(2));
         register(registerable, WamPlacedFeatureKeys.FELL_HEATHER_PATCH, WamConfiguredFeatureKeys.HEATHER_PATCH, chanceModifiers(5));
@@ -92,17 +98,27 @@ public final class WamPlacedFeatures {
     }
 
     private static void registerVanillaBiomes(BootstrapContext<PlacedFeature> registerable) {
-        register(registerable, WamPlacedFeatureKeys.PLAINS_FLOWERS, WamConfiguredFeatureKeys.PLAINS_FLOWERS, chanceModifiers(20));
+        register(registerable, WamPlacedFeatureKeys.PLAINS_FLOWERS, WamConfiguredFeatureKeys.PLAINS_FLOWERS, Util.copyAndAdd(chanceModifiers(20), RandomOffsetPlacement.ofTriangle(7, 3), CountPlacement.of(96)));
         register(registerable, WamPlacedFeatureKeys.FOREST_TANSY, WamConfiguredFeatureKeys.FOREST_TANSY,
-            cons(
-                CountPlacement.of(ClampedInt.of(UniformInt.of(-4, 1), 0, 1)),
-                chanceModifiers(7)
+            Util.copyAndAdd(
+                chanceModifiers(7),
+                CountPlacement.of(24),
+                InSquarePlacement.spread(),
+                RandomOffsetPlacement.ofTriangle(7, 3),
+                BlockPredicateFilter.forPredicate(
+                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.TANSY.defaultBlockState(), BlockPos.ZERO))
+                )
             )
         );
         register(registerable, WamPlacedFeatureKeys.TAIGA_HEATHER_PATCH, WamConfiguredFeatureKeys.HEATHER_PATCH,
-            cons(
-                CountPlacement.of(ClampedInt.of(UniformInt.of(-4, 1), 0, 1)),
-                chanceModifiers(7)
+            Util.copyAndAdd(
+                chanceModifiers(7),
+                InSquarePlacement.spread(),
+                CountPlacement.of(24),
+                RandomOffsetPlacement.ofTriangle(7, 3),
+                BlockPredicateFilter.forPredicate(
+                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.HEATHER.defaultBlockState(), BlockPos.ZERO))
+                )
             )
         );
     }

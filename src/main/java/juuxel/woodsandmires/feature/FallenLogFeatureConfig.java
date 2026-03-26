@@ -2,6 +2,8 @@ package juuxel.woodsandmires.feature;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.util.valueproviders.FloatProviders;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.valueproviders.FloatProvider;
@@ -15,8 +17,8 @@ public record FallenLogFeatureConfig(Block mainLog, Block agedLog, FloatProvider
         instance -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("main_log").forGetter(FallenLogFeatureConfig::mainLog),
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("aged_log").forGetter(FallenLogFeatureConfig::agedLog),
-            FloatProvider.CODEC.fieldOf("aged_height_fraction").forGetter(FallenLogFeatureConfig::agedHeightFraction),
-            IntProvider.POSITIVE_CODEC.fieldOf("length").forGetter(FallenLogFeatureConfig::length),
+            FloatProviders.CODEC.fieldOf("aged_height_fraction").forGetter(FallenLogFeatureConfig::agedHeightFraction),
+            IntProviders.POSITIVE_CODEC.fieldOf("length").forGetter(FallenLogFeatureConfig::length),
             BlockStateProvider.CODEC.fieldOf("top_decoration").forGetter(FallenLogFeatureConfig::topDecoration)
         ).apply(instance, FallenLogFeatureConfig::new)
     );

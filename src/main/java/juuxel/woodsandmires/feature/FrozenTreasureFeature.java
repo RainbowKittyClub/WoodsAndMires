@@ -60,7 +60,7 @@ public final class FrozenTreasureFeature extends Feature<FrozenTreasureFeatureCo
                         setBlock(world, mut, chest);
                         RandomizableContainer.setBlockEntityLootTable(world, random, mut, config.lootTable());
                     } else if (FellPondFeature.isInsideEllipse(x, z, semiMajorSq, semiMinorSq, 0)) {
-                        setBlock(world, mut, config.ice().getState(random, mut));
+                        setBlock(world, mut, config.ice().getState(world, random, mut));
                     }
                 }
             }

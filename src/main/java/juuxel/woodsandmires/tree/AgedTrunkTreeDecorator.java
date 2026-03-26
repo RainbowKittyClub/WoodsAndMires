@@ -1,18 +1,18 @@
 package juuxel.woodsandmires.tree;
 
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.ints.IntRBTreeSet;
 import it.unimi.dsi.fastutil.ints.IntSortedSet;
 import juuxel.woodsandmires.block.AgedLogBlock;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.valueproviders.FloatProviders;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.valueproviders.FloatProvider;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 
@@ -20,7 +20,7 @@ public final class AgedTrunkTreeDecorator extends TreeDecorator {
     public static final MapCodec<AgedTrunkTreeDecorator> CODEC = RecordCodecBuilder.mapCodec(
         instance -> instance.group(
             BuiltInRegistries.BLOCK.byNameCodec().fieldOf("log").forGetter(AgedTrunkTreeDecorator::getLog),
-            FloatProvider.codec(0, 1).fieldOf("aged_height_fraction")
+            FloatProviders.codec(0, 1).fieldOf("aged_height_fraction")
                 .forGetter(AgedTrunkTreeDecorator::getAgedHeightFraction)
         ).apply(instance, AgedTrunkTreeDecorator::new)
     );
@@ -57,7 +57,7 @@ public final class AgedTrunkTreeDecorator extends TreeDecorator {
         for (BlockPos pos : generator.logs()) {
             if (pos.getY() > midY) {
                 break;
-            } else if (generator.level().isStateAtPosition(pos, Feature::isDirt)) {
+            } else if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.DIRT))) {
                 // Don't replace the dirt underneath the trunk
                 continue;
             }

@@ -8,7 +8,7 @@ import eu.pb4.polymer.resourcepack.extras.api.format.item.tint.ConstantTintSourc
 import eu.pb4.polymer.resourcepack.extras.api.format.item.tint.GrassTintSource;
 import juuxel.woodsandmires.WoodsAndMires;
 import juuxel.woodsandmires.block.WamBlocks;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.world.item.BlockItem;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public record WamItemModelProvider(FabricDataOutput output) implements DataProvider {
+public record WamItemModelProvider(FabricPackOutput output) implements DataProvider {
 
     @Override
     public CompletableFuture<?> run(CachedOutput writer) {

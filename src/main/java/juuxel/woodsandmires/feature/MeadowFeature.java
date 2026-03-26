@@ -33,7 +33,7 @@ public class MeadowFeature extends Feature<MeadowFeatureConfig> {
 
                 if (!config.allowedPlacement.test(world, mut)) continue;
 
-                BlockState vegetation = config.stateProvider.getState(random, mut);
+                BlockState vegetation = config.stateProvider.getState(world, random, mut);
                 if (world.isEmptyBlock(mut) && vegetation.canSurvive(world, mut)) {
                     setBlock(world, mut, vegetation);
                     generated = true;

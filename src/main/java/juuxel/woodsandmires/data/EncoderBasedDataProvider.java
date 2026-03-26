@@ -1,6 +1,6 @@
 package juuxel.woodsandmires.data;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public abstract class EncoderBasedDataProvider<T> extends FabricDynamicRegistryProvider {
     private final ResourceKey<? extends Registry<T>> registryKey;
 
-    protected EncoderBasedDataProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture, ResourceKey<? extends Registry<T>> registryKey) {
+    protected EncoderBasedDataProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture, ResourceKey<? extends Registry<T>> registryKey) {
         super(output, registriesFuture);
         this.registryKey = registryKey;
     }

@@ -2,16 +2,16 @@ package juuxel.woodsandmires.data;
 
 import juuxel.woodsandmires.block.WamBlockTags;
 import juuxel.woodsandmires.block.WamBlocks;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public final class WamBlockTagProvider extends FabricTagProvider.BlockTagProvider {
-    public WamBlockTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+public final class WamBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
+    public WamBlockTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
@@ -33,8 +33,6 @@ public final class WamBlockTagProvider extends FabricTagProvider.BlockTagProvide
             .add(WamBlocks.PINE_LEAVES);
         valueLookupBuilder(BlockTags.LOGS_THAT_BURN)
             .addTag(WamBlockTags.PINE_LOGS);
-        valueLookupBuilder(BlockTags.MUSHROOM_GROW_BLOCK)
-            .addTag(WamBlockTags.THICK_PINE_LOGS);
         valueLookupBuilder(BlockTags.PLANKS)
             .add(WamBlocks.PINE_PLANKS);
         valueLookupBuilder(BlockTags.SAPLINGS)

@@ -5,7 +5,7 @@ import juuxel.woodsandmires.block.WamBlocks;
 import juuxel.woodsandmires.data.builtin.CommonItemTags;
 import juuxel.woodsandmires.item.WamItemTags;
 import juuxel.woodsandmires.item.WamItems;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
@@ -36,7 +36,7 @@ public final class WamRecipeProvider extends FabricRecipeProvider {
         .recipeUnlockedBy("has_planks")
         .getFamily();
 
-    public WamRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public WamRecipeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 

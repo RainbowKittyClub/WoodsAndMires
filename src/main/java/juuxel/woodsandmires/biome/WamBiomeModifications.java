@@ -3,7 +3,7 @@ package juuxel.woodsandmires.biome;
 import juuxel.woodsandmires.WoodsAndMires;
 import juuxel.woodsandmires.feature.WamPlacedFeatureKeys;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.tag.convention.v1.ConventionalBiomeTags;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -17,7 +17,7 @@ public final class WamBiomeModifications {
         );
 
         BiomeModifications.addFeature(
-            context -> context.hasTag(ConventionalBiomeTags.FOREST) && !WoodsAndMires.ID.equals(context.getBiomeKey().identifier().getNamespace()),
+            context -> context.hasTag(ConventionalBiomeTags.IS_FOREST) && !WoodsAndMires.ID.equals(context.getBiomeKey().identifier().getNamespace()),
             GenerationStep.Decoration.VEGETAL_DECORATION,
             WamPlacedFeatureKeys.FOREST_TANSY
         );

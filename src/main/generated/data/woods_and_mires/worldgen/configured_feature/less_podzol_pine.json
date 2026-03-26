@@ -1,6 +1,26 @@
 {
   "type": "minecraft:tree",
   "config": {
+    "below_trunk_provider": {
+      "type": "minecraft:rule_based_state_provider",
+      "rules": [
+        {
+          "if_true": {
+            "type": "minecraft:not",
+            "predicate": {
+              "type": "minecraft:matching_block_tag",
+              "tag": "minecraft:cannot_replace_below_tree_trunk"
+            }
+          },
+          "then": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:dirt"
+            }
+          }
+        }
+      ]
+    },
     "decorators": [
       {
         "type": "woods_and_mires:pool",
@@ -42,36 +62,41 @@
       {
         "type": "minecraft:alter_ground",
         "provider": {
-          "type": "minecraft:weighted_state_provider",
-          "entries": [
+          "type": "minecraft:rule_based_state_provider",
+          "rules": [
             {
-              "data": {
-                "Name": "minecraft:grass_block",
-                "Properties": {
-                  "snowy": "false"
-                }
+              "if_true": {
+                "type": "minecraft:matching_block_tag",
+                "tag": "minecraft:beneath_tree_podzol_replaceable"
               },
-              "weight": 3
-            },
-            {
-              "data": {
-                "Name": "minecraft:podzol",
-                "Properties": {
-                  "snowy": "false"
-                }
-              },
-              "weight": 1
+              "then": {
+                "type": "minecraft:weighted_state_provider",
+                "entries": [
+                  {
+                    "data": {
+                      "Name": "minecraft:grass_block",
+                      "Properties": {
+                        "snowy": "false"
+                      }
+                    },
+                    "weight": 3
+                  },
+                  {
+                    "data": {
+                      "Name": "minecraft:podzol",
+                      "Properties": {
+                        "snowy": "false"
+                      }
+                    },
+                    "weight": 1
+                  }
+                ]
+              }
             }
           ]
         }
       }
     ],
-    "dirt_provider": {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:dirt"
-      }
-    },
     "foliage_placer": {
       "type": "minecraft:pine_foliage_placer",
       "height": {
@@ -93,7 +118,6 @@
         }
       }
     },
-    "force_dirt": false,
     "ignore_vines": true,
     "minimum_size": {
       "type": "minecraft:two_layers_feature_size",

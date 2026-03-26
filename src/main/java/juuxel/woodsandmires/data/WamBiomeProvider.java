@@ -1,8 +1,7 @@
 package juuxel.woodsandmires.data;
 
 import juuxel.woodsandmires.biome.WamBiomeKeys;
-import juuxel.woodsandmires.data.EncoderBasedDataProvider;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.HolderLookup;
@@ -12,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 public final class WamBiomeProvider extends EncoderBasedDataProvider<Biome> {
-    public WamBiomeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public WamBiomeProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture, Registries.BIOME);
     }
 

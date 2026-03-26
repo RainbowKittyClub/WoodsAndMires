@@ -1,8 +1,8 @@
 package juuxel.woodsandmires.data;
 
 import juuxel.woodsandmires.biome.WamBiomeKeys;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.ResourceKey;
@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
-public final class WamBiomeTagProvider extends FabricTagProvider<Biome> {
-    public WamBiomeTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+public final class WamBiomeTagProvider extends FabricTagsProvider<Biome> {
+    public WamBiomeTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, Registries.BIOME, registriesFuture);
     }
 
