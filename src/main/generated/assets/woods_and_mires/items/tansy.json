@@ -1,1 +1,13 @@
-{"model":{"model":"woods_and_mires:item/tansy","tints":[{"temperature":0.5,"downfall":1.0,"type":"minecraft:grass"}],"type":"minecraft:model"}}
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "woods_and_mires:item/tansy",
+    "tints": [
+      {
+        "type": "minecraft:grass",
+        "downfall": 1.0,
+        "temperature": 0.5
+      }
+    ]
+  }
+}

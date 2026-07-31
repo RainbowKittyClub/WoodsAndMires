@@ -8,11 +8,6 @@ version = "$project.mod_version+$project.minecraft_version"
 group = project.maven_group
 
 sourceSets {
-    data {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
-    }
-
     main {
         resources.srcDir 'src/generated/resources'
     }

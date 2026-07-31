@@ -1,1 +1,12 @@
-{"model":{"model":"woods_and_mires:item/pine_leaves","tints":[{"value":-12012264,"type":"minecraft:constant"}],"type":"minecraft:model"}}
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "woods_and_mires:block/pine_leaves",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -12012264
+      }
+    ]
+  }
+}

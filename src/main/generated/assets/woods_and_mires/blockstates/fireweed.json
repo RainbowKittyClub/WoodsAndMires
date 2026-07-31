@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "half=lower": [
+      {
+        "model": "woods_and_mires:block/fireweed_bottom"
+      },
+      {
+        "model": "woods_and_mires:block/fireweed_bottom_mirrored"
+      }
+    ],
+    "half=upper": [
+      {
+        "model": "woods_and_mires:block/fireweed_top"
+      },
+      {
+        "model": "woods_and_mires:block/fireweed_top_mirrored"
+      }
+    ]
+  }
+}

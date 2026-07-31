@@ -1,1 +1,6 @@
-{"model":{"model":"woods_and_mires:item/pine_fence","type":"minecraft:model"}}
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "woods_and_mires:block/pine_fence_inventory"
+  }
+}
