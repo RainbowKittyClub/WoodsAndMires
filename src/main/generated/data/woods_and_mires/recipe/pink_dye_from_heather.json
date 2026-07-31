@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "pink_dye",
   "ingredients": [
     "woods_and_mires:heather"

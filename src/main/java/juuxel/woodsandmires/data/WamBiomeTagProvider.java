@@ -4,17 +4,13 @@ import juuxel.woodsandmires.biome.WamBiomeKeys;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBiomeTags;
-import net.minecraft.data.tags.TagAppender;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Stream;
 
 public final class WamBiomeTagProvider extends FabricTagsProvider<Biome> {
     public WamBiomeTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
@@ -56,7 +52,9 @@ public final class WamBiomeTagProvider extends FabricTagsProvider<Biome> {
             .add(WamBiomeKeys.PINY_GROVE);
         builder(ConventionalBiomeTags.IS_TEMPERATE_OVERWORLD)
             .add(WamBiomeKeys.LUSH_PINE_FOREST);
-        forEachTag(ConventionalBiomeTags.IS_WET_OVERWORLD, ConventionalBiomeTags.IS_SWAMP)
+        builder(ConventionalBiomeTags.IS_WET_OVERWORLD)
+            .add(WamBiomeKeys.PINE_MIRE);
+        builder(ConventionalBiomeTags.IS_SWAMP)
             .add(WamBiomeKeys.PINE_MIRE);
         builder(ConventionalBiomeTags.IS_HILL)
             .add(WamBiomeKeys.SNOWY_PINE_FOREST)
@@ -73,28 +71,8 @@ public final class WamBiomeTagProvider extends FabricTagsProvider<Biome> {
             .add(WamBiomeKeys.PINY_GROVE);
     }
 
-    @SafeVarargs
-    private MultiBuilder<Biome> forEachTag(TagKey<Biome>... tags) {
-        return new MultiBuilder<>(Stream.of(tags).map(this::builder).toList());
-    }
-
     private void generateOverworld(TagKey<Biome> tag) {
         var tagBuilder = builder(tag);
         WamBiomeKeys.ALL.stream().forEach(tagBuilder::add);
-    }
-
-    static final class MultiBuilder<T> {
-        private final List<TagAppender<ResourceKey<T>, T>> builders;
-
-        private MultiBuilder(List<TagAppender<ResourceKey<T>, T>> builders) {
-            this.builders = builders;
-        }
-
-        public MultiBuilder<T> add(ResourceKey<T> key) {
-            for (var builder : builders) {
-                builder.add(key);
-            }
-            return this;
-        }
     }
 }

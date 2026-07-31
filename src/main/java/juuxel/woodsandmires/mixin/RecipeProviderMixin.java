@@ -35,7 +35,7 @@ abstract class RecipeProviderMixin {
     }
 
     @Redirect(
-        method = "hangingSign",
+        method = "hangingSignBuilder",
         at = @At(value = "INVOKE", target = "Lnet/minecraft/data/recipes/ShapedRecipeBuilder;define(Ljava/lang/Character;Lnet/minecraft/world/level/ItemLike;)Lnet/minecraft/data/recipes/ShapedRecipeBuilder;")
     )
     private static ShapedRecipeBuilder replaceChain(ShapedRecipeBuilder builder, Character c, ItemLike item) {

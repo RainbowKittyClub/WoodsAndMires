@@ -4,10 +4,9 @@ import juuxel.woodsandmires.WoodsAndMires;
 import juuxel.woodsandmires.block.WamBlocks;
 import juuxel.woodsandmires.feature.*;
 import juuxel.woodsandmires.tree.*;
-import net.minecraft.data.worldgen.features.FeatureUtils;
-import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.TreePlacements;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -57,7 +56,10 @@ public final class WamConfiguredFeatures {
         this.placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
     }
 
-    private void registerGeneral() {
+    private void registerGeneral(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
+        BlockStateProvider belowTrunkProvider = TreeConfiguration.defaultPlaceBelowTreeTrunkProvider(biomes);
+
         register(WamConfiguredFeatureKeys.SHORT_PINE_SHRUB, WamFeatures.SHRUB,
             new ShrubFeatureConfig(
                 WamBlocks.PINE_LOG.defaultBlockState(),
@@ -72,7 +74,7 @@ public final class WamConfiguredFeatures {
                 1, 2, 0.8f
             )
         );
-        var pine = register(WamConfiguredFeatureKeys.PINE, Feature.TREE, pineTree(1, 1));
+        var pine = register(WamConfiguredFeatureKeys.PINE, Feature.TREE, pineTree(1, 1, belowTrunkProvider));
         var giantPine = register(WamConfiguredFeatureKeys.GIANT_PINE, Feature.TREE,
             new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(WamBlocks.PINE_LOG.defaultBlockState()),
@@ -83,7 +85,8 @@ public final class WamConfiguredFeatures {
                     ConstantInt.of(1),
                     UniformInt.of(3, 5)
                 ),
-                new TwoLayersFeatureSize(2, 0, 2)
+                new TwoLayersFeatureSize(2, 0, 2),
+                belowTrunkProvider
             )
                 .ignoreVines()
                 .decorators(
@@ -107,14 +110,15 @@ public final class WamConfiguredFeatures {
                 new ForkingTrunkPlacer(4, 4, 0),
                 BlockStateProvider.simple(Blocks.AIR.defaultBlockState()),
                 new BlobFoliagePlacer(ConstantInt.of(0), ConstantInt.of(0), 0),
-                new TwoLayersFeatureSize(2, 0, 2)
+                new TwoLayersFeatureSize(2, 0, 2),
+                belowTrunkProvider
             )
                 .ignoreVines()
                 .decorators(List.of(new BranchTreeDecorator(WamBlocks.PINE_SNAG_BRANCH, 0.2f)))
                 .build()
         );
         register(WamConfiguredFeatureKeys.PLAINS_FLOWERS, Feature.SIMPLE_RANDOM_SELECTOR,
-            new SimpleRandomFeatureConfiguration(
+            new CompositeFeatureConfiguration(
                 HolderSet.direct(
                     createFlowerPatchFeature(WamBlocks.FIREWEED),
                     createFlowerPatchFeature(WamBlocks.TANSY)
@@ -131,7 +135,8 @@ public final class WamConfiguredFeatures {
                     ConstantInt.of(1),
                     UniformInt.of(3, 5)
                 ),
-                new TwoLayersFeatureSize(2, 0, 2)
+                new TwoLayersFeatureSize(2, 0, 2),
+                belowTrunkProvider
             ).ignoreVines().decorators(List.of(createPineTrunkDecorator())).build()
         );
         register(WamConfiguredFeatureKeys.PINE_FOREST_BOULDER,
@@ -149,8 +154,8 @@ public final class WamConfiguredFeatures {
         register(WamConfiguredFeatureKeys.HEATHER_PATCH, Feature.SIMPLE_BLOCK,
             new SimpleBlockConfiguration(BlockStateProvider.simple(WamBlocks.HEATHER))
         );
-        var lessPodzolPine = register(WamConfiguredFeatureKeys.LESS_PODZOL_PINE, Feature.TREE, pineTree(3, 1));
-        noPodzolPine = register(WamConfiguredFeatureKeys.NO_PODZOL_PINE, Feature.TREE, pineTree(1, 0));
+        var lessPodzolPine = register(WamConfiguredFeatureKeys.LESS_PODZOL_PINE, Feature.TREE, pineTree(3, 1, belowTrunkProvider));
+        noPodzolPine = register(WamConfiguredFeatureKeys.NO_PODZOL_PINE, Feature.TREE, pineTree(1, 0, belowTrunkProvider));
         register(WamConfiguredFeatureKeys.LUSH_PINE_FOREST_TREES, Feature.RANDOM_SELECTOR,
             new RandomFeatureConfiguration(
                 List.of(
@@ -227,7 +232,7 @@ public final class WamConfiguredFeatures {
         return new PoolTreeDecorator(trunkDecorators.build());
     }
 
-    private static TreeConfiguration pineTree(int grassWeight, int podzolWeight) {
+    private static TreeConfiguration pineTree(int grassWeight, int podzolWeight, BlockStateProvider belowTrunkProvider) {
         List<TreeDecorator> decorators = new ArrayList<>();
         decorators.add(createPineTrunkDecorator());
 
@@ -255,7 +260,8 @@ public final class WamConfiguredFeatures {
                 ConstantInt.of(1),
                 UniformInt.of(3, 5)
             ),
-            new TwoLayersFeatureSize(2, 0, 2)
+            new TwoLayersFeatureSize(2, 0, 2),
+            belowTrunkProvider
         )
             .ignoreVines()
             .decorators(List.copyOf(decorators))
@@ -302,7 +308,9 @@ public final class WamConfiguredFeatures {
     // Fells
     public static final ResourceKey<LootTable> FROZEN_TREASURE_LOOT_TABLE = ResourceKey.create(Registries.LOOT_TABLE, WoodsAndMires.id("chests/frozen_treasure"));
 
-    private void registerFells() {
+    private void registerFells(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        HolderGetter<Block> blocks = context.lookup(Registries.BLOCK);
+
         register(WamConfiguredFeatureKeys.FELL_VEGETATION, WamFeatures.MEADOW,
             new MeadowFeatureConfig(
                 BlockStateProvider.simple(Blocks.SHORT_GRASS),
@@ -357,7 +365,7 @@ public final class WamConfiguredFeatures {
         );
         register(WamConfiguredFeatureKeys.FELL_MOSS_PATCH, Feature.VEGETATION_PATCH,
             new VegetationPatchConfiguration(
-                BlockTags.MOSS_REPLACEABLE,
+                blocks.getOrThrow(BlockTags.MOSS_REPLACEABLE),
                 BlockStateProvider.simple(Blocks.MOSS_BLOCK),
                 PlacementUtils.inlinePlaced(fellMossPatchVegetation),
                 CaveSurface.FLOOR,
@@ -395,11 +403,11 @@ public final class WamConfiguredFeatures {
         );
     }
 
-    public static void register(BootstrapContext<ConfiguredFeature<?, ?>> registerable) {
-        WamConfiguredFeatures configuredFeatures = new WamConfiguredFeatures(registerable);
-        configuredFeatures.registerGeneral();
+    public static void register(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+        WamConfiguredFeatures configuredFeatures = new WamConfiguredFeatures(context);
+        configuredFeatures.registerGeneral(context);
         configuredFeatures.registerMires();
-        configuredFeatures.registerFells();
+        configuredFeatures.registerFells(context);
         configuredFeatures.registerGroves();
     }
 

@@ -1,12 +1,13 @@
 package juuxel.woodsandmires.data;
 
 import juuxel.woodsandmires.block.WamBlockTags;
-import juuxel.woodsandmires.block.WamBlocks;
+import juuxel.woodsandmires.references.WamBlockIds;
+import juuxel.woodsandmires.references.WamBlockItemIds;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -18,62 +19,60 @@ public final class WamBlockTagProvider extends FabricTagsProvider.BlockTagsProvi
     @Override
     protected void addTags(HolderLookup.Provider arg) {
         // Minecraft tags
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_AXE)
-            .add(WamBlocks.PINE_SNAG_BRANCH);
-        valueLookupBuilder(BlockTags.CEILING_HANGING_SIGNS)
-            .add(WamBlocks.PINE_HANGING_SIGN);
-        valueLookupBuilder(BlockTags.FENCE_GATES)
-            .add(WamBlocks.PINE_FENCE_GATE);
-        valueLookupBuilder(BlockTags.FLOWER_POTS)
-            .add(WamBlocks.POTTED_PINE_SAPLING)
-            .add(WamBlocks.POTTED_TANSY)
-            .add(WamBlocks.POTTED_FELL_LICHEN)
-            .add(WamBlocks.POTTED_HEATHER);
-        valueLookupBuilder(BlockTags.LEAVES)
-            .add(WamBlocks.PINE_LEAVES);
-        valueLookupBuilder(BlockTags.LOGS_THAT_BURN)
+        builder(BlockTags.MINEABLE_WITH_AXE)
+            .add(WamBlockIds.PINE_SNAG_BRANCH);
+        builder(BlockTags.CEILING_HANGING_SIGNS)
+            .add(WamBlockItemIds.PINE_HANGING_SIGN.block());
+        builder(BlockTags.FENCE_GATES)
+            .add(WamBlockItemIds.PINE_FENCE_GATE.block());
+        builder(BlockTags.FLOWER_POTS)
+            .add(WamBlockIds.POTTED_PINE_SAPLING)
+            .add(WamBlockIds.POTTED_TANSY)
+            .add(WamBlockIds.POTTED_FELL_LICHEN)
+            .add(WamBlockIds.POTTED_HEATHER);
+        builder(BlockTags.LEAVES)
+            .add(WamBlockItemIds.PINE_LEAVES.block());
+        builder(BlockTags.LOGS)
             .addTag(WamBlockTags.PINE_LOGS);
-        valueLookupBuilder(BlockTags.PLANKS)
-            .add(WamBlocks.PINE_PLANKS);
-        valueLookupBuilder(BlockTags.SAPLINGS)
-            .add(WamBlocks.PINE_SAPLING);
-        valueLookupBuilder(BlockTags.SMALL_FLOWERS)
-            .add(WamBlocks.HEATHER, WamBlocks.TANSY);
-        valueLookupBuilder(BlockTags.STANDING_SIGNS)
-            .add(WamBlocks.PINE_SIGN);
-        valueLookupBuilder(BlockTags.BEE_ATTRACTIVE)
-            .add(WamBlocks.FIREWEED);
-        valueLookupBuilder(BlockTags.WALL_HANGING_SIGNS)
-            .add(WamBlocks.PINE_WALL_HANGING_SIGN);
-        valueLookupBuilder(BlockTags.WALL_SIGNS)
-            .add(WamBlocks.PINE_WALL_SIGN);
-        valueLookupBuilder(BlockTags.WOODEN_BUTTONS)
-            .add(WamBlocks.PINE_BUTTON);
-        valueLookupBuilder(BlockTags.WOODEN_DOORS)
-            .add(WamBlocks.PINE_DOOR);
-        valueLookupBuilder(BlockTags.WOODEN_FENCES)
-            .add(WamBlocks.PINE_FENCE);
-        valueLookupBuilder(BlockTags.WOODEN_PRESSURE_PLATES)
-            .add(WamBlocks.PINE_PRESSURE_PLATE);
-        valueLookupBuilder(BlockTags.WOODEN_SLABS)
-            .add(WamBlocks.PINE_SLAB);
-        valueLookupBuilder(BlockTags.WOODEN_STAIRS)
-            .add(WamBlocks.PINE_STAIRS);
-        valueLookupBuilder(BlockTags.WOODEN_TRAPDOORS)
-            .add(WamBlocks.PINE_TRAPDOOR);
+        builder(BlockTags.PLANKS)
+            .add(WamBlockItemIds.PINE_PLANKS.block());
+        builder(BlockTags.SMALL_FLOWERS)
+            .add(WamBlockItemIds.HEATHER.block(), WamBlockItemIds.TANSY.block());
+        builder(BlockTags.STANDING_SIGNS)
+            .add(WamBlockItemIds.PINE_SIGN.block());
+        builder(BlockTags.BEE_ATTRACTIVE)
+            .add(WamBlockItemIds.FIREWEED.block());
+        builder(BlockTags.WALL_HANGING_SIGNS)
+            .add(WamBlockIds.PINE_WALL_HANGING_SIGN);
+        builder(BlockTags.WALL_SIGNS)
+            .add(WamBlockIds.PINE_WALL_SIGN);
+        builder(BlockTags.WOODEN_BUTTONS)
+            .add(WamBlockItemIds.PINE_BUTTON.block());
+        builder(BlockTags.WOODEN_DOORS)
+            .add(WamBlockItemIds.PINE_DOOR.block());
+        builder(BlockTags.WOODEN_FENCES)
+            .add(WamBlockItemIds.PINE_FENCE.block());
+        builder(BlockTags.WOODEN_PRESSURE_PLATES)
+            .add(WamBlockItemIds.PINE_PRESSURE_PLATE.block());
+        builder(BlockTags.WOODEN_SLABS)
+            .add(WamBlockItemIds.PINE_SLAB.block());
+        builder(BlockTags.WOODEN_STAIRS)
+            .add(WamBlockItemIds.PINE_STAIRS.block());
+        builder(BlockTags.WOODEN_TRAPDOORS)
+            .add(WamBlockItemIds.PINE_TRAPDOOR.block());
 
         // WaM tags
-        valueLookupBuilder(WamBlockTags.LICHEN_PLANTABLE_ON)
+        builder(WamBlockTags.LICHEN_PLANTABLE_ON)
             .forceAddTag(BlockTags.DIRT)
-            .add(Blocks.FARMLAND)
+            .add(Blocks.FARMLAND.builtInRegistryHolder().key())
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD);
-        valueLookupBuilder(WamBlockTags.PINE_LOGS)
+        builder(WamBlockTags.PINE_LOGS)
             .addTag(WamBlockTags.THICK_PINE_LOGS)
-            .add(WamBlocks.PINE_SHRUB_LOG);
-        valueLookupBuilder(WamBlockTags.THICK_PINE_LOGS)
-            .add(WamBlocks.PINE_LOG, WamBlocks.AGED_PINE_LOG)
-            .add(WamBlocks.PINE_WOOD, WamBlocks.AGED_PINE_WOOD)
-            .add(WamBlocks.STRIPPED_PINE_LOG, WamBlocks.STRIPPED_PINE_WOOD)
-            .add(WamBlocks.PINE_SNAG_LOG, WamBlocks.PINE_SNAG_WOOD);
+            .add(WamBlockItemIds.PINE_SHRUB_LOG.block());
+        builder(WamBlockTags.THICK_PINE_LOGS)
+            .add(WamBlockItemIds.PINE_LOG.block(), WamBlockItemIds.AGED_PINE_LOG.block())
+            .add(WamBlockItemIds.PINE_WOOD.block(), WamBlockItemIds.AGED_PINE_WOOD.block())
+            .add(WamBlockItemIds.STRIPPED_PINE_LOG.block(), WamBlockItemIds.STRIPPED_PINE_WOOD.block())
+            .add(WamBlockItemIds.PINE_SNAG_LOG.block(), WamBlockItemIds.PINE_SNAG_WOOD.block());
     }
 }

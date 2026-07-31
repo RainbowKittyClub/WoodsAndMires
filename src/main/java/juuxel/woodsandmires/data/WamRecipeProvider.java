@@ -23,12 +23,15 @@ import java.util.concurrent.CompletableFuture;
 
 public final class WamRecipeProvider extends FabricRecipeProvider {
     public static final BlockFamily PINE_FAMILY = BlockFamilies.familyBuilder(WamBlocks.PINE_PLANKS)
+        .log(WamBlocks.PINE_LOG)
+        .strippedLog(WamBlocks.STRIPPED_PINE_LOG)
         .button(WamBlocks.PINE_BUTTON)
         .door(WamBlocks.PINE_DOOR)
         .fence(WamBlocks.PINE_FENCE)
         .fenceGate(WamBlocks.PINE_FENCE_GATE)
         .pressurePlate(WamBlocks.PINE_PRESSURE_PLATE)
         .sign(WamBlocks.PINE_SIGN, WamBlocks.PINE_WALL_SIGN)
+        .hangingSign(WamBlocks.PINE_HANGING_SIGN, WamBlocks.PINE_WALL_HANGING_SIGN)
         .slab(WamBlocks.PINE_SLAB)
         .stairs(WamBlocks.PINE_STAIRS)
         .trapdoor(WamBlocks.PINE_TRAPDOOR)
@@ -66,12 +69,11 @@ public final class WamRecipeProvider extends FabricRecipeProvider {
                 woodFromLogs(WamBlocks.STRIPPED_PINE_WOOD, WamBlocks.STRIPPED_PINE_LOG);
                 woodenBoat(WamItems.PINE_BOAT, WamBlocks.PINE_PLANKS);
                 chestBoat(WamItems.PINE_CHEST_BOAT, WamItems.PINE_BOAT);
-                hangingSign(WamBlocks.PINE_HANGING_SIGN, WamBlocks.STRIPPED_PINE_LOG);
 
                 // Dyes
-                offerShapelessRecipe(output, Items.MAGENTA_DYE, WamBlocks.FIREWEED, "magenta_dye", 2);
-                offerShapelessRecipe(output, Items.PINK_DYE, WamBlocks.HEATHER, "pink_dye", 1);
-                offerShapelessRecipe(output, Items.YELLOW_DYE, WamBlocks.TANSY, "yellow_dye", 1);
+                offerShapelessRecipe(output, Items.DYE.magenta(), WamBlocks.FIREWEED, "magenta_dye", 2);
+                offerShapelessRecipe(output, Items.DYE.pink(), WamBlocks.HEATHER, "pink_dye", 1);
+                offerShapelessRecipe(output, Items.DYE.yellow(), WamBlocks.TANSY, "yellow_dye", 1);
 
                 // Other
                 shapeless(RecipeCategory.FOOD, WamItems.PINE_CONE_JAM)
