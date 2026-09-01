@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "minecraft:glass_bottle",
+    "#c:pine_cones",
+    "#c:pine_cones",
+    "#c:sugar"
+  ],
+  "result": {
+    "id": "woods_and_mires:pine_cone_jam"
+  }
+}

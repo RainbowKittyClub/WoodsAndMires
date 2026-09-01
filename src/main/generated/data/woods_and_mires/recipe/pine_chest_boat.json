@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "chest_boat",
+  "ingredients": [
+    "#c:wooden_chests",
+    "woods_and_mires:pine_boat"
+  ],
+  "result": {
+    "id": "woods_and_mires:pine_chest_boat"
+  }
+}

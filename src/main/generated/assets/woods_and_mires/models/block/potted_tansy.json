@@ -1,0 +1,7 @@
+{
+  "parent": "woods_and_mires:block/templates/potted_layered_cross",
+  "textures": {
+    "flower": "woods_and_mires:block/tansy_flowers",
+    "plant": "woods_and_mires:block/tansy_base"
+  }
+}

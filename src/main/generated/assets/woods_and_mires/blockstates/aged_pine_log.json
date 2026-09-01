@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "axis=x,mid=false": {
+      "model": "woods_and_mires:block/pine_log_aged",
+      "x": 90,
+      "y": 90
+    },
+    "axis=x,mid=true": {
+      "model": "woods_and_mires:block/pine_log_mid",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,mid=false": {
+      "model": "woods_and_mires:block/pine_log_aged"
+    },
+    "axis=y,mid=true": {
+      "model": "woods_and_mires:block/pine_log_mid"
+    },
+    "axis=z,mid=false": {
+      "model": "woods_and_mires:block/pine_log_aged",
+      "x": 90
+    },
+    "axis=z,mid=true": {
+      "model": "woods_and_mires:block/pine_log_mid",
+      "x": 90
+    }
+  }
+}

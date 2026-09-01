@@ -1,69 +1,107 @@
 package juuxel.woodsandmires.item;
 
+import juuxel.woodsandmires.WoodsAndMires;
 import juuxel.woodsandmires.block.WamBlocks;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTabOutput;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 public final class WamItemGroups {
+    private static final ResourceKey<CreativeModeTab> ITEM_GROUP = ResourceKey.create(Registries.CREATIVE_MODE_TAB, Identifier.fromNamespaceAndPath(WoodsAndMires.ID, "items"));
+
     public static void init() {
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
-            entries.addAfter(Items.WARPED_BUTTON,
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {
+            entries.insertAfter(Items.WARPED_BUTTON,
                 WamBlocks.PINE_LOG,
                 WamBlocks.AGED_PINE_LOG,
+                WamBlocks.PINE_SHRUB_LOG,
                 WamBlocks.PINE_WOOD,
                 WamBlocks.AGED_PINE_WOOD,
                 WamBlocks.STRIPPED_PINE_LOG,
                 WamBlocks.STRIPPED_PINE_WOOD,
                 WamBlocks.PINE_SNAG_LOG,
-                WamBlocks.PINE_SNAG_WOOD
+                WamBlocks.PINE_SNAG_WOOD,
+                WamBlocks.PINE_PLANKS,
+                WamBlocks.PINE_STAIRS,
+                WamBlocks.PINE_SLAB,
+                WamBlocks.PINE_FENCE,
+                WamBlocks.PINE_FENCE_GATE,
+                WamBlocks.PINE_DOOR,
+                WamBlocks.PINE_TRAPDOOR,
+                WamBlocks.PINE_PRESSURE_PLATE,
+                WamBlocks.PINE_BUTTON
             );
         });
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
-            entries.addAfter(Items.WARPED_STEM,
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.NATURAL_BLOCKS).register(entries -> {
+            entries.insertAfter(Items.WARPED_STEM,
                 WamBlocks.PINE_LOG,
                 WamBlocks.AGED_PINE_LOG,
+                WamBlocks.PINE_SHRUB_LOG,
                 WamBlocks.PINE_SNAG_LOG);
-            entries.addAfter(Items.FLOWERING_AZALEA_LEAVES,
+            entries.insertAfter(Items.FLOWERING_AZALEA_LEAVES,
                 WamBlocks.PINE_LEAVES);
-            entries.addAfter(Items.FLOWERING_AZALEA,
+            entries.insertAfter(Items.FLOWERING_AZALEA,
                 WamBlocks.PINE_SAPLING);
-            entries.addAfter(Items.LILY_OF_THE_VALLEY,
+            entries.insertAfter(Items.LILY_OF_THE_VALLEY,
                 WamBlocks.TANSY,
                 WamBlocks.HEATHER);
-            entries.addAfter(Items.PEONY,
+            entries.insertAfter(Items.PEONY,
                 WamBlocks.FIREWEED);
-            entries.addBefore(Items.GLOW_LICHEN,
+            entries.insertBefore(Items.GLOW_LICHEN,
                 WamBlocks.FELL_LICHEN);
         });
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
-            addBefore(entries, stack -> stack.isOf(Items.ENCHANTED_BOOK),
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FUNCTIONAL_BLOCKS).register(entries -> {
+            entries.insertAfter(Items.WARPED_HANGING_SIGN,
+                WamBlocks.PINE_SIGN,
+                WamBlocks.PINE_HANGING_SIGN);
+        });
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> {
+            entries.insertAfter(Items.BAMBOO_CHEST_RAFT,
+                WamItems.PINE_BOAT,
+                WamItems.PINE_CHEST_BOAT);
+        });
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.INGREDIENTS).register(entries -> {
+            addBefore(entries, stack -> stack.is(Items.ENCHANTED_BOOK),
                 WamItems.PINE_CONE);
         });
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
-            entries.add(WamItems.PINE_CONE_JAM);
+        CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(entries -> {
+            entries.accept(WamItems.PINE_CONE_JAM);
         });
+
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, ITEM_GROUP, FabricCreativeModeTab.builder()
+            .title(Component.literal("Woods and Mires"))
+            .icon(() -> WamBlocks.PINE_SAPLING.asItem().getDefaultInstance())
+            .displayItems((context, entries) -> {
+                BuiltInRegistries.ITEM.listElementIds().filter(itemRegistryKey -> itemRegistryKey.identifier().getNamespace().equals(WoodsAndMires.ID)).map(BuiltInRegistries.ITEM::getValue).forEach(entries::accept);
+            }).build()
+        );
     }
 
-    private static void addBefore(FabricItemGroupEntries entries, Predicate<ItemStack> predicate, ItemConvertible... items) {
+    private static void addBefore(FabricCreativeModeTabOutput entries, Predicate<ItemStack> predicate, ItemLike... items) {
         var stacks = Arrays.stream(items).map(ItemStack::new).toList();
-        entries.addBefore(predicate, stacks, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+        entries.insertBefore(predicate, stacks, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
     }
 
-    private static void addAfterFirstEnabled(FabricItemGroupEntries entries, List<Item> after, ItemConvertible... items) {
+    private static void insertAfterFirstEnabled(FabricCreativeModeTabOutput entries, List<Item> after, ItemLike... items) {
         Item start = after.stream()
-            .filter(item -> item.getRequiredFeatures().isSubsetOf(entries.getEnabledFeatures()))
+            .filter(item -> item.requiredFeatures().isSubsetOf(entries.getEnabledFeatures()))
             .findFirst()
             .orElseThrow(() -> new RuntimeException("Could not find any of the items " + after));
-        entries.addAfter(start, items);
+        entries.insertAfter(start, items);
     }
 }

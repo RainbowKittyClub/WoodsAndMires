@@ -1,49 +1,184 @@
 {
-  "__comment": "Based on woods_and_mires:block/templates/layered_cross but is mirrored",
   "ambientocclusion": false,
-  "textures": {
-    "particle": "#cross"
-  },
   "elements": [
     {
-      "from": [0.8, 0, 8],
-      "to": [15.2, 16, 8],
-      "rotation": { "origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true },
-      "shade": false,
       "faces": {
-        "north": { "uv": [16, 0, 0, 16], "texture": "#cross", "tintindex": 0 },
-        "south": { "uv": [16, 0, 0, 16], "texture": "#cross", "tintindex": 0 }
-      }
+        "north": {
+          "texture": "#cross",
+          "tintindex": 0,
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#cross",
+          "tintindex": 0,
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        }
+      },
+      "from": [
+        0.8,
+        0,
+        8
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "rescale": true
+      },
+      "shade": false,
+      "to": [
+        15.2,
+        16,
+        8
+      ]
     },
     {
-      "from": [8, 0, 0.8],
-      "to": [8, 16, 15.2],
-      "rotation": { "origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true },
-      "shade": false,
       "faces": {
-        "west": { "uv": [16, 0, 0, 16], "texture": "#cross", "tintindex": 0 },
-        "east": { "uv": [16, 0, 0, 16], "texture": "#cross", "tintindex": 0 }
-      }
+        "east": {
+          "texture": "#cross",
+          "tintindex": 0,
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#cross",
+          "tintindex": 0,
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        }
+      },
+      "from": [
+        8,
+        0,
+        0.8
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "rescale": true
+      },
+      "shade": false,
+      "to": [
+        8,
+        16,
+        15.2
+      ]
     },
     {
-      "from": [0.8, 0, 8],
-      "to": [15.2, 16, 8],
-      "rotation": { "origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true },
-      "shade": false,
       "faces": {
-        "north": { "uv": [16, 0, 0, 16], "texture": "#decoration", "tintindex": -1 },
-        "south": { "uv": [16, 0, 0, 16], "texture": "#decoration", "tintindex": -1 }
-      }
+        "north": {
+          "texture": "#decoration",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#decoration",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        }
+      },
+      "from": [
+        0.8,
+        0,
+        8
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "rescale": true
+      },
+      "shade": false,
+      "to": [
+        15.2,
+        16,
+        8
+      ]
     },
     {
-      "from": [8, 0, 0.8],
-      "to": [8, 16, 15.2],
-      "rotation": { "origin": [8, 8, 8], "axis": "y", "angle": 45, "rescale": true },
-      "shade": false,
       "faces": {
-        "west": { "uv": [16, 0, 0, 16], "texture": "#decoration", "tintindex": -1 },
-        "east": { "uv": [16, 0, 0, 16], "texture": "#decoration", "tintindex": -1 }
-      }
+        "east": {
+          "texture": "#decoration",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#decoration",
+          "uv": [
+            16,
+            0,
+            0,
+            16
+          ]
+        }
+      },
+      "from": [
+        8,
+        0,
+        0.8
+      ],
+      "rotation": {
+        "angle": 45,
+        "axis": "y",
+        "origin": [
+          8,
+          8,
+          8
+        ],
+        "rescale": true
+      },
+      "shade": false,
+      "to": [
+        8,
+        16,
+        15.2
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "particle": "#cross"
+  }
 }

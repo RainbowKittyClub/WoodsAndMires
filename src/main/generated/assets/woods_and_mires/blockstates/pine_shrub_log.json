@@ -1,0 +1,39 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "woods_and_mires:block/pine_shrub_log"
+      },
+      "when": {
+        "axis": "y"
+      }
+    },
+    {
+      "apply": {
+        "model": "woods_and_mires:block/pine_shrub_log",
+        "x": 90
+      },
+      "when": {
+        "axis": "z"
+      }
+    },
+    {
+      "apply": {
+        "model": "woods_and_mires:block/pine_shrub_log",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "axis": "x"
+      }
+    },
+    {
+      "apply": {
+        "model": "woods_and_mires:block/pine_leaves"
+      },
+      "when": {
+        "has_leaves": "true"
+      }
+    }
+  ]
+}

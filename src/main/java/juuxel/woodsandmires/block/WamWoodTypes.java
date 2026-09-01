@@ -2,8 +2,8 @@ package juuxel.woodsandmires.block;
 
 import juuxel.woodsandmires.WoodsAndMires;
 import net.fabricmc.fabric.api.object.builder.v1.block.type.WoodTypeBuilder;
-import net.minecraft.block.BlockSetType;
-import net.minecraft.block.WoodType;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 
 public final class WamWoodTypes {
     public static final WoodType PINE = register("pine", WamBlockSetTypes.PINE);
@@ -12,6 +12,6 @@ public final class WamWoodTypes {
     }
 
     private static WoodType register(String id, BlockSetType blockSetType) {
-        return new WoodTypeBuilder().register(WoodsAndMires.id(id), blockSetType);
+        return WoodTypeBuilder.copyOf(WoodType.SPRUCE).register(WoodsAndMires.id(id), blockSetType);
     }
 }
