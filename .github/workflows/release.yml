@@ -1,26 +1,37 @@
 name: release
 on: [workflow_dispatch]
 
+permissions:
+  contents: write
+  actions: read
+
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout repository
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      - name: read java version
+        id: java
+        run: echo "version=$(grep -oP '^java_version=\K.*' gradle.properties)" >> "$GITHUB_OUTPUT"
+      - name: setup jdk
+        uses: actions/setup-java@v6
         with:
-          java-version: '25'
+          java-version: ${{ steps.java.outputs.version }}
           distribution: 'microsoft'
-      - uses: FabricMC/fabric-action-scripts@v2
+      - name: setup gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          validate-wrappers: true
+      - name: generate changelog
+        uses: FabricMC/fabric-action-scripts@v3
         id: changelog
         with:
           context: changelog
           workflow_id: release.yml
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
-      - name: Publish mods
+      - name: publish mods
         run: ./gradlew publishMods
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

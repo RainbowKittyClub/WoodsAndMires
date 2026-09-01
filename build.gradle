@@ -1,6 +1,6 @@
 plugins {
     id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
-    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
+    id "me.modmuss50.mod-publish-plugin" version "2.2.0"
     id 'maven-publish'
 }
 
@@ -68,7 +68,7 @@ publishMods {
 
     github {
         accessToken = providers.environmentVariable("GITHUB_TOKEN")
-        repository = providers.environmentVariable("GITHUB_REPOSITORY").getOrElse("KiloCraft/WoodsAndMires")
+        repository = providers.environmentVariable("GITHUB_REPOSITORY").getOrElse("RainbowKittyClub/WoodsAndMires")
         commitish = providers.environmentVariable("GITHUB_REF_NAME").getOrElse("main")
     }
 }
@@ -84,8 +84,8 @@ processResources {
 java {
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
+    sourceCompatibility = JavaVersion.toVersion(project.java_version)
+    targetCompatibility = JavaVersion.toVersion(project.java_version)
 }
 
 // ensure that the encoding is set to UTF-8, no matter what the system default is
@@ -93,7 +93,7 @@ java {
 // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
-    options.release = 25
+    options.release = project.java_version as int
 }
 
 jar {

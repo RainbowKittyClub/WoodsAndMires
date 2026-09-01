@@ -103,7 +103,6 @@ public final class WamPlacedFeatures {
             Util.copyAndAdd(
                 chanceModifiers(7),
                 CountPlacement.of(24),
-                InSquarePlacement.spread(),
                 RandomOffsetPlacement.ofTriangle(7, 3),
                 BlockPredicateFilter.forPredicate(
                     BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.TANSY.defaultBlockState(), BlockPos.ZERO))
@@ -113,7 +112,6 @@ public final class WamPlacedFeatures {
         register(registerable, WamPlacedFeatureKeys.TAIGA_HEATHER_PATCH, WamConfiguredFeatureKeys.HEATHER_PATCH,
             Util.copyAndAdd(
                 chanceModifiers(7),
-                InSquarePlacement.spread(),
                 CountPlacement.of(24),
                 RandomOffsetPlacement.ofTriangle(7, 3),
                 BlockPredicateFilter.forPredicate(
