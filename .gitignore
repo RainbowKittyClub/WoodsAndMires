@@ -24,3 +24,9 @@ bin/
 
 run/
 src/main/generated/.cache/
+
+# claude code local session state; shared settings stay trackable
+
+**/.claude/*
+!/.claude/settings.json
+.mcp.json

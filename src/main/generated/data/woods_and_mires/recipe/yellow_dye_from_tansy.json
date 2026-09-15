@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "yellow_dye",
+  "ingredients": [
+    "woods_and_mires:tansy"
+  ],
+  "result": {
+    "id": "minecraft:yellow_dye"
+  }
+}
