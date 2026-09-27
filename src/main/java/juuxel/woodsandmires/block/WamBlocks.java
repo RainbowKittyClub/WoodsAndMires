@@ -76,6 +76,12 @@ public final class WamBlocks {
         fbr.add(PINE_SNAG_LOG, 5, 5);
         fbr.add(PINE_SNAG_WOOD, 5, 5);
         fbr.add(PINE_LEAVES, 5, 20);
+        // Vanilla's odds for oak's planks and the blocks made from them (FireBlock#bootStrap).
+        fbr.add(PINE_PLANKS, 5, 20);
+        fbr.add(PINE_SLAB, 5, 20);
+        fbr.add(PINE_STAIRS, 5, 20);
+        fbr.add(PINE_FENCE, 5, 20);
+        fbr.add(PINE_FENCE_GATE, 5, 20);
 
         StrippableBlockRegistry.register(PINE_LOG, STRIPPED_PINE_LOG);
         StrippableBlockRegistry.register(AGED_PINE_LOG, STRIPPED_PINE_LOG);
