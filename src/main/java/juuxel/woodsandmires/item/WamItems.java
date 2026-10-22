@@ -8,7 +8,8 @@ import juuxel.woodsandmires.references.WamItemIds;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SignItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Items;
 import net.minecraft.core.Registry;
@@ -26,8 +27,8 @@ public final class WamItems {
         .usingConvertsTo(Items.GLASS_BOTTLE)
         .food(new FoodProperties.Builder().nutrition(3).saturationModifier(0.25f).build())
     );
-    public static final Item SIGN = register(WamBlockItemIds.PINE_SIGN.item(), settings -> new SignItem(WamBlocks.PINE_SIGN, WamBlocks.PINE_WALL_SIGN, settings), new Item.Properties().stacksTo(16).useBlockDescriptionPrefix());
-    public static final Item HANGING_SIGN = register(WamBlockItemIds.PINE_HANGING_SIGN.item(), settings -> new HangingSignItem(WamBlocks.PINE_HANGING_SIGN, WamBlocks.PINE_WALL_HANGING_SIGN, settings), new Item.Properties().stacksTo(16).useBlockDescriptionPrefix());
+    public static final Item SIGN = register(WamBlockItemIds.PINE_SIGN.item(), settings -> new StandingAndWallBlockItem(WamBlocks.PINE_SIGN, WamBlocks.PINE_WALL_SIGN, Direction.DOWN, settings), new Item.Properties().stacksTo(16).signText().useBlockDescriptionPrefix());
+    public static final Item HANGING_SIGN = register(WamBlockItemIds.PINE_HANGING_SIGN.item(), settings -> new HangingSignItem(WamBlocks.PINE_HANGING_SIGN, WamBlocks.PINE_WALL_HANGING_SIGN, settings), new Item.Properties().stacksTo(16).signText().useBlockDescriptionPrefix());
 
     public static void init() {
     }
