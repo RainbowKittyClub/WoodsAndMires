@@ -11,7 +11,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.providers.number.BinomialDistributionGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.minecraft.core.HolderLookup;
 
 import java.util.concurrent.CompletableFuture;
@@ -40,7 +40,7 @@ public final class WamBlockLootTableProvider extends FabricBlockLootSubProvider 
                 .withPool(applyExplosionCondition(WamItems.PINE_CONE, LootPool.lootPool()
                     .when(doesNotHaveShearsOrSilkTouch())
                     .add(LootItem.lootTableItem(WamItems.PINE_CONE)
-                        .apply(SetItemCountFunction.setCount(BinomialDistributionGenerator.binomial(3, 0.04f)))
+                        .apply(SetItemCountFunction.setCount(ContextIntProviders.binomial(3, 0.04f)))
                     )
                 ))
         );
@@ -56,7 +56,7 @@ public final class WamBlockLootTableProvider extends FabricBlockLootSubProvider 
             LootTable.lootTable()
                 .withPool(applyExplosionCondition(Items.STICK, LootPool.lootPool()
                     .add(LootItem.lootTableItem(Items.STICK)
-                        .apply(SetItemCountFunction.setCount(BinomialDistributionGenerator.binomial(4, 0.8f)))
+                        .apply(SetItemCountFunction.setCount(ContextIntProviders.binomial(4, 0.8f)))
                     )
                 ))
         );
