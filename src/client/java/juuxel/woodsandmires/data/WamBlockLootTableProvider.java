@@ -33,6 +33,7 @@ public final class WamBlockLootTableProvider extends FabricBlockLootSubProvider 
         dropSelf(WamBlocks.PINE_BUTTON);
         dropSelf(WamBlocks.PINE_PRESSURE_PLATE);
         dropSelf(WamBlocks.PINE_SIGN);
+        dropSelf(WamBlocks.PINE_HANGING_SIGN);
         add(WamBlocks.PINE_DOOR, this::createDoorTable);
         dropSelf(WamBlocks.PINE_TRAPDOOR);
         add(WamBlocks.PINE_LEAVES,
