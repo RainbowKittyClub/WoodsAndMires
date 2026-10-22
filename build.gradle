@@ -26,6 +26,7 @@ fabricApi {
 }
 
 repositories {
+    mavenLocal()
     maven {
         url = "https://maven.minecraftforge.net"
     }
