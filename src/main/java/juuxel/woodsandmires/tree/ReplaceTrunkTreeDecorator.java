@@ -3,8 +3,8 @@ package juuxel.woodsandmires.tree;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
@@ -16,13 +16,17 @@ public final class ReplaceTrunkTreeDecorator extends TreeDecorator {
                 BlockStateProvider.CODEC.fieldOf("trunk").forGetter(ReplaceTrunkTreeDecorator::getTrunk)
             ).apply(builder, ReplaceTrunkTreeDecorator::new)
         );
-    private final BlockStateProvider trunk;
+    private final Holder<BlockStateProvider> trunk;
 
-    public ReplaceTrunkTreeDecorator(BlockStateProvider trunk) {
+    public ReplaceTrunkTreeDecorator(Holder<BlockStateProvider> trunk) {
         this.trunk = trunk;
     }
 
-    public BlockStateProvider getTrunk() {
+    public ReplaceTrunkTreeDecorator(BlockStateProvider trunk) {
+        this(Holder.direct(trunk));
+    }
+
+    public Holder<BlockStateProvider> getTrunk() {
         return trunk;
     }
 
@@ -37,7 +41,7 @@ public final class ReplaceTrunkTreeDecorator extends TreeDecorator {
             // Don't replace the dirt underneath the trunk
             if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.DIRT))) continue;
 
-            generator.setBlock(pos, trunk.getState(generator.level(), generator.random(), pos));
+            generator.setBlock(pos, trunk.value().getState(generator.level(), generator.random(), pos));
         }
     }
 }

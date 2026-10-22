@@ -1,18 +1,20 @@
 package juuxel.woodsandmires.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 
-public class MirePondsFeature extends Feature<NoneFeatureConfiguration> {
+public record MirePondsFeature() implements Feature {
+    public static final MapCodec<MirePondsFeature> CODEC = MapCodec.unit(MirePondsFeature::new);
+
     private static final Direction[] NON_UP_DIRECTIONS = new Direction[] {
         Direction.NORTH,
         Direction.EAST,
@@ -21,16 +23,13 @@ public class MirePondsFeature extends Feature<NoneFeatureConfiguration> {
         Direction.DOWN
     };
 
-    public MirePondsFeature(Codec<NoneFeatureConfiguration> configCodec) {
-        super(configCodec);
+    @Override
+    public MapCodec<MirePondsFeature> codec() {
+        return CODEC;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        var world = context.level();
-        var pos = context.origin();
-        var random = context.random();
-
+    public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, RandomSource random, BlockPos pos) {
         BlockState water = Blocks.WATER.defaultBlockState();
         BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos();
         boolean generated = false;
