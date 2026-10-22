@@ -132,7 +132,7 @@ public final class WamBlocks {
             .mapColor(MapColor.PLANT)
             .noCollision()
             .instabreak()
-            .pushReaction(PushReaction.DESTROY)
+            .pushReaction(PushReaction.POPPED)
             .sound(SoundType.GRASS);
     }
 }
