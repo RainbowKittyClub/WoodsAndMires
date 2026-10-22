@@ -63,7 +63,7 @@ public final class WamBlockTagProvider extends FabricTagsProvider.BlockTagsProvi
 
         // WaM tags
         builder(WamBlockTags.LICHEN_PLANTABLE_ON)
-            .forceAddTag(BlockTags.DIRT)
+            .forceAddTag(BlockTags.SUBSTRATE_OVERWORLD)
             .add(Blocks.FARMLAND.builtInRegistryHolder().key())
             .forceAddTag(BlockTags.BASE_STONE_OVERWORLD);
         builder(WamBlockTags.PINE_LOGS)

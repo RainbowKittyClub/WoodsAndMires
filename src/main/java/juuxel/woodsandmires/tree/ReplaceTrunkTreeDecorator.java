@@ -39,7 +39,7 @@ public final class ReplaceTrunkTreeDecorator extends TreeDecorator {
     public void place(Context generator) {
         for (BlockPos pos : generator.logs()) {
             // Don't replace the dirt underneath the trunk
-            if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.DIRT))) continue;
+            if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.SUBSTRATE_OVERWORLD))) continue;
 
             generator.setBlock(pos, trunk.value().getState(generator.level(), generator.random(), pos));
         }

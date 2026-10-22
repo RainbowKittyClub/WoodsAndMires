@@ -34,7 +34,7 @@ public record ShrubFeature(BlockState log, BlockState leaves, int baseHeight, in
     @Override
     public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, RandomSource random, BlockPos pos) {
         BlockPos below = pos.below();
-        if (!world.isStateAtPosition(below, blockState -> blockState.is(BlockTags.DIRT)) || !world.getBlockState(below).isFaceSturdy(world, below, Direction.UP)) {
+        if (!world.isStateAtPosition(below, blockState -> blockState.is(BlockTags.SUBSTRATE_OVERWORLD)) || !world.getBlockState(below).isFaceSturdy(world, below, Direction.UP)) {
             return false;
         }
 

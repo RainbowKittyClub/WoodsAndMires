@@ -44,7 +44,7 @@ public record MirePondsFeature() implements Feature {
                 int y = world.getHeight(Heightmap.Types.MOTION_BLOCKING, xo, zo) - 1;
                 mut.set(xo, y, zo);
 
-                if (world.isStateAtPosition(mut, blockState -> blockState.is(BlockTags.DIRT)) && isSolidOrWaterAround(world, mut)) {
+                if (world.isStateAtPosition(mut, blockState -> blockState.is(BlockTags.SUBSTRATE_OVERWORLD)) && isSolidOrWaterAround(world, mut)) {
                     setBlock(world, mut, water);
                     generated = true;
 

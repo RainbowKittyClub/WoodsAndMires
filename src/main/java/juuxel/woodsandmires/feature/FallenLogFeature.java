@@ -106,7 +106,7 @@ public record FallenLogFeature(Block mainLog, Block agedLog, FloatProvider agedH
     private static boolean canPlace(LevelSimulatedReader world, BlockPos.MutableBlockPos mut) {
         if (!world.isStateAtPosition(mut, BlockState::isAir)) return false;
         mut.move(0, -1, 0);
-        boolean result = world.isStateAtPosition(mut, blockState -> blockState.is(BlockTags.DIRT));
+        boolean result = world.isStateAtPosition(mut, blockState -> blockState.is(BlockTags.SUBSTRATE_OVERWORLD));
         mut.move(0, 1, 0);
         return result;
     }

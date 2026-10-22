@@ -51,7 +51,7 @@ public final class BranchTreeDecorator extends TreeDecorator {
 
         for (BlockPos pos : generator.logs()) {
             // Don't replace the dirt underneath the trunk
-            if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.DIRT))) continue;
+            if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.SUBSTRATE_OVERWORLD))) continue;
 
             mut.set(pos);
 
