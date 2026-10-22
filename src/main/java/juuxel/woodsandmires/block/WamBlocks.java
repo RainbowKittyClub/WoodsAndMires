@@ -33,7 +33,7 @@ public final class WamBlocks {
     public static final Block PINE_STAIRS = register(WamBlockItemIds.PINE_STAIRS, copyWoodSettings(Blocks.OAK_STAIRS), settings -> new StairBlock(PINE_PLANKS.defaultBlockState(), settings));
     public static final Block PINE_FENCE = register(WamBlockItemIds.PINE_FENCE, copyWoodSettings(Blocks.OAK_FENCE), FenceBlock::new);
     public static final Block PINE_FENCE_GATE = register(WamBlockItemIds.PINE_FENCE_GATE, copyWoodSettings(Blocks.OAK_FENCE_GATE), settings -> new FenceGateBlock(WamWoodTypes.PINE, settings));
-    public static final Block PINE_DOOR = register(WamBlockItemIds.PINE_DOOR, copyWoodSettings(Blocks.OAK_DOOR), settings -> new DoorBlock(WamBlockSetTypes.PINE, settings));
+    public static final Block PINE_DOOR = register(WamBlockItemIds.PINE_DOOR, copyWoodSettings(Blocks.OAK_DOOR), settings -> new DoorBlock(WamBlockSetTypes.PINE, settings), DoubleHighBlockItem::new);
     public static final Block PINE_TRAPDOOR = register(WamBlockItemIds.PINE_TRAPDOOR, copyWoodSettings(Blocks.OAK_TRAPDOOR), settings -> new TrapDoorBlock(WamBlockSetTypes.PINE, settings));
     public static final Block PINE_BUTTON = register(WamBlockItemIds.PINE_BUTTON, copyWoodSettings(Blocks.OAK_BUTTON), settings -> new ButtonBlock(WamBlockSetTypes.PINE, 30, settings));
     public static final Block PINE_PRESSURE_PLATE = register(WamBlockItemIds.PINE_PRESSURE_PLATE, copyWoodSettings(Blocks.OAK_PRESSURE_PLATE), settings -> new PressurePlateBlock(WamBlockSetTypes.PINE, settings));
