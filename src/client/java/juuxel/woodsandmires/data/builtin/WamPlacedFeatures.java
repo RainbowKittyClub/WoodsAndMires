@@ -3,7 +3,6 @@ package juuxel.woodsandmires.data.builtin;
 import juuxel.woodsandmires.block.WamBlocks;
 import juuxel.woodsandmires.feature.WamConfiguredFeatureKeys;
 import juuxel.woodsandmires.feature.WamPlacedFeatureKeys;
-import net.minecraft.core.BlockPos;
 import net.minecraft.util.Util;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -57,10 +56,10 @@ public final class WamPlacedFeatures {
             Util.copyAndAdd(
                 chanceModifiers(2),
                 InSquarePlacement.spread(),
-                RandomOffsetPlacement.ofTriangle(7, 3),
+                OffsetPlacement.ofTriangle(7, 3),
                 CountPlacement.of(64),
                 BlockPredicateFilter.forPredicate(
-                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.TANSY.defaultBlockState(), BlockPos.ZERO))
+                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.TANSY))
                 )
             )
         );
@@ -87,7 +86,7 @@ public final class WamPlacedFeatures {
                 )
             )
         );
-        register(registerable, WamPlacedFeatureKeys.FELL_LICHEN, WamConfiguredFeatureKeys.FELL_LICHEN, Util.copyAndAdd(chanceModifiers(2), RandomOffsetPlacement.ofTriangle(7, 3), CountPlacement.of(96)));
+        register(registerable, WamPlacedFeatureKeys.FELL_LICHEN, WamConfiguredFeatureKeys.FELL_LICHEN, Util.copyAndAdd(chanceModifiers(2), OffsetPlacement.ofTriangle(7, 3), CountPlacement.of(96)));
         register(registerable, WamPlacedFeatureKeys.FELL_MOSS_PATCH, WamConfiguredFeatureKeys.FELL_MOSS_PATCH, chanceModifiers(5));
         register(registerable, WamPlacedFeatureKeys.FROZEN_TREASURE, WamConfiguredFeatureKeys.FROZEN_TREASURE, countModifiers(2));
         register(registerable, WamPlacedFeatureKeys.FELL_HEATHER_PATCH, WamConfiguredFeatureKeys.HEATHER_PATCH, chanceModifiers(5));
@@ -98,14 +97,14 @@ public final class WamPlacedFeatures {
     }
 
     private static void registerVanillaBiomes(BootstrapContext<PlacedFeature> registerable) {
-        register(registerable, WamPlacedFeatureKeys.PLAINS_FLOWERS, WamConfiguredFeatureKeys.PLAINS_FLOWERS, Util.copyAndAdd(chanceModifiers(20), RandomOffsetPlacement.ofTriangle(7, 3), CountPlacement.of(96)));
+        register(registerable, WamPlacedFeatureKeys.PLAINS_FLOWERS, WamConfiguredFeatureKeys.PLAINS_FLOWERS, Util.copyAndAdd(chanceModifiers(20), OffsetPlacement.ofTriangle(7, 3), CountPlacement.of(96)));
         register(registerable, WamPlacedFeatureKeys.FOREST_TANSY, WamConfiguredFeatureKeys.FOREST_TANSY,
             Util.copyAndAdd(
                 chanceModifiers(7),
                 CountPlacement.of(24),
-                RandomOffsetPlacement.ofTriangle(7, 3),
+                OffsetPlacement.ofTriangle(7, 3),
                 BlockPredicateFilter.forPredicate(
-                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.TANSY.defaultBlockState(), BlockPos.ZERO))
+                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.TANSY))
                 )
             )
         );
@@ -113,9 +112,9 @@ public final class WamPlacedFeatures {
             Util.copyAndAdd(
                 chanceModifiers(7),
                 CountPlacement.of(24),
-                RandomOffsetPlacement.ofTriangle(7, 3),
+                OffsetPlacement.ofTriangle(7, 3),
                 BlockPredicateFilter.forPredicate(
-                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.HEATHER.defaultBlockState(), BlockPos.ZERO))
+                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.HEATHER))
                 )
             )
         );
