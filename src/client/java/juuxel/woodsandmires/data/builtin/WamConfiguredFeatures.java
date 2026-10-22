@@ -395,6 +395,11 @@ public final class WamConfiguredFeatures {
     }
 
     private static Holder<PlacedFeature> createFlowerPatchFeature(Block block) {
-        return PlacementUtils.inlinePlaced(new SimpleBlockFeature(BlockStateProvider.of(block)), PlacementUtils.isEmpty());
+        return PlacementUtils.inlinePlaced(
+            new SimpleBlockFeature(BlockStateProvider.of(block)),
+            CountPlacement.of(64),
+            OffsetPlacement.ofTriangle(7, 3),
+            PlacementUtils.isEmpty()
+        );
     }
 }

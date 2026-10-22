@@ -3,6 +3,7 @@ package juuxel.woodsandmires.data.builtin;
 import juuxel.woodsandmires.block.WamBlocks;
 import juuxel.woodsandmires.feature.WamConfiguredFeatureKeys;
 import juuxel.woodsandmires.feature.WamPlacedFeatureKeys;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Util;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -39,12 +40,23 @@ public final class WamPlacedFeatures {
         return List.of(RarityFilter.onAverageOnceEvery(chance), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
     }
 
+    private static List<PlacementModifier> heatherPatchModifiers(int chance) {
+        return Util.copyAndAdd(
+            chanceModifiers(chance),
+            CountPlacement.of(96),
+            OffsetPlacement.ofTriangle(7, 3),
+            BlockPredicateFilter.forPredicate(
+                BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.HEATHER))
+            )
+        );
+    }
+
     private static void registerPineForests(BootstrapContext<PlacedFeature> registerable) {
         register(registerable, WamPlacedFeatureKeys.FOREST_PINE, WamConfiguredFeatureKeys.PINE, treeModifiersWithWouldSurvive(CountPlacement.of(10), WamBlocks.PINE_SAPLING));
         register(registerable, WamPlacedFeatureKeys.SNOWY_PINE_FOREST_TREES, WamConfiguredFeatureKeys.SNOWY_PINE_FOREST_TREES, countExtraTreeModifiers(8, 0.1f, 1));
         register(registerable, WamPlacedFeatureKeys.OLD_GROWTH_PINE_FOREST_TREES, WamConfiguredFeatureKeys.OLD_GROWTH_PINE_FOREST_TREES, countExtraTreeModifiers(10, 0.1f, 1));
         register(registerable, WamPlacedFeatureKeys.PINE_FOREST_BOULDER, WamConfiguredFeatureKeys.PINE_FOREST_BOULDER, chanceModifiers(16));
-        register(registerable, WamPlacedFeatureKeys.PINE_FOREST_HEATHER_PATCH, WamConfiguredFeatureKeys.HEATHER_PATCH, chanceModifiers(12));
+        register(registerable, WamPlacedFeatureKeys.PINE_FOREST_HEATHER_PATCH, WamConfiguredFeatureKeys.HEATHER_PATCH, heatherPatchModifiers(12));
         register(registerable, WamPlacedFeatureKeys.LUSH_PINE_FOREST_TREES, WamConfiguredFeatureKeys.LUSH_PINE_FOREST_TREES, countExtraTreeModifiers(8, 0.1f, 1));
         register(registerable, WamPlacedFeatureKeys.LUSH_PINE_FOREST_FLOWERS, WamConfiguredFeatureKeys.PLAINS_FLOWERS, chanceModifiers(2));
         register(registerable, WamPlacedFeatureKeys.FALLEN_PINE, WamConfiguredFeatureKeys.FALLEN_PINE, chanceModifiers(7));
@@ -55,9 +67,8 @@ public final class WamPlacedFeatures {
         register(registerable, WamPlacedFeatureKeys.MIRE_FLOWERS, WamConfiguredFeatureKeys.MIRE_FLOWERS,
             Util.copyAndAdd(
                 chanceModifiers(2),
-                InSquarePlacement.spread(),
-                OffsetPlacement.ofTriangle(7, 3),
                 CountPlacement.of(64),
+                OffsetPlacement.ofTriangle(7, 3),
                 BlockPredicateFilter.forPredicate(
                     BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.wouldSurvive(WamBlocks.TANSY))
                 )
@@ -86,10 +97,19 @@ public final class WamPlacedFeatures {
                 )
             )
         );
-        register(registerable, WamPlacedFeatureKeys.FELL_LICHEN, WamConfiguredFeatureKeys.FELL_LICHEN, Util.copyAndAdd(chanceModifiers(2), OffsetPlacement.ofTriangle(7, 3), CountPlacement.of(96)));
+        register(registerable, WamPlacedFeatureKeys.FELL_LICHEN, WamConfiguredFeatureKeys.FELL_LICHEN,
+            Util.copyAndAdd(
+                chanceModifiers(2),
+                CountPlacement.of(96),
+                OffsetPlacement.ofTriangle(7, 3),
+                BlockPredicateFilter.forPredicate(
+                    BlockPredicate.allOf(BlockPredicate.ONLY_IN_AIR_PREDICATE, BlockPredicate.matchesBlocks(Direction.DOWN, Blocks.STONE))
+                )
+            )
+        );
         register(registerable, WamPlacedFeatureKeys.FELL_MOSS_PATCH, WamConfiguredFeatureKeys.FELL_MOSS_PATCH, chanceModifiers(5));
         register(registerable, WamPlacedFeatureKeys.FROZEN_TREASURE, WamConfiguredFeatureKeys.FROZEN_TREASURE, countModifiers(2));
-        register(registerable, WamPlacedFeatureKeys.FELL_HEATHER_PATCH, WamConfiguredFeatureKeys.HEATHER_PATCH, chanceModifiers(5));
+        register(registerable, WamPlacedFeatureKeys.FELL_HEATHER_PATCH, WamConfiguredFeatureKeys.HEATHER_PATCH, heatherPatchModifiers(5));
     }
 
     private static void registerGroves(BootstrapContext<PlacedFeature> registerable) {
@@ -97,7 +117,7 @@ public final class WamPlacedFeatures {
     }
 
     private static void registerVanillaBiomes(BootstrapContext<PlacedFeature> registerable) {
-        register(registerable, WamPlacedFeatureKeys.PLAINS_FLOWERS, WamConfiguredFeatureKeys.PLAINS_FLOWERS, Util.copyAndAdd(chanceModifiers(20), OffsetPlacement.ofTriangle(7, 3), CountPlacement.of(96)));
+        register(registerable, WamPlacedFeatureKeys.PLAINS_FLOWERS, WamConfiguredFeatureKeys.PLAINS_FLOWERS, chanceModifiers(20));
         register(registerable, WamPlacedFeatureKeys.FOREST_TANSY, WamConfiguredFeatureKeys.FOREST_TANSY,
             Util.copyAndAdd(
                 chanceModifiers(7),
