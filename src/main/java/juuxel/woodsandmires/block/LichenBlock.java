@@ -1,6 +1,5 @@
 package juuxel.woodsandmires.block;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.VegetationBlock;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -14,11 +13,6 @@ public class LichenBlock extends VegetationBlock {
 
     public LichenBlock(Properties settings) {
         super(settings);
-    }
-
-    @Override
-    protected MapCodec<? extends VegetationBlock> codec() {
-        return null;
     }
 
     @Override
