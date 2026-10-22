@@ -1,6 +1,5 @@
 package juuxel.woodsandmires.data.builtin;
 
-import com.mojang.serialization.Lifecycle;
 import juuxel.woodsandmires.biome.WamBiomeKeys;
 import juuxel.woodsandmires.feature.WamPlacedFeatureKeys;
 import net.minecraft.core.HolderGetter;
@@ -29,6 +28,7 @@ import org.jgrapht.graph.DirectedAcyclicGraph;
 import org.jgrapht.graph.GraphCycleProhibitedException;
 
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public final class WamBiomes {
     // See Biome.doesNotSnow (1.19.4)
@@ -61,7 +61,7 @@ public final class WamBiomes {
     private void initGraph() {
         record CapturingRegisterable<T>(BootstrapContext<?> parent, Consumer<T> sink) implements BootstrapContext<T> {
             @Override
-            public Holder.Reference<T> register(ResourceKey<T> key, T value, Lifecycle lifecycle) {
+            public Holder.Reference<T> register(ResourceKey<T> key, T value) {
                 sink.accept(value);
                 return null;
             }
@@ -69,6 +69,12 @@ public final class WamBiomes {
             @Override
             public <S> HolderGetter<S> lookup(ResourceKey<? extends Registry<? extends S>> registryRef) {
                 return parent.lookup(registryRef);
+            }
+
+            @Override
+            @SuppressWarnings("deprecation")
+            public <S> Stream<Holder.Reference<S>> listContextElements(ResourceKey<? extends Registry<? extends S>> registryRef) {
+                return parent.listContextElements(registryRef);
             }
         }
 
