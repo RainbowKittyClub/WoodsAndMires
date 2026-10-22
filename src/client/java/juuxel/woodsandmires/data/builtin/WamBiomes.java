@@ -11,7 +11,6 @@ import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.core.Holder;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.biome.Biome;
@@ -146,8 +145,8 @@ public final class WamBiomes {
             BiomeDefaultFeatures.farmAnimals(builder);
             BiomeDefaultFeatures.commonSpawns(builder);
 
-            builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4));
-            builder.addSpawn(MobCategory.CREATURE, 4, new MobSpawnSettings.SpawnerData(EntityTypes.FOX, 2, 4));
+            builder.addSpawn(EntityTypes.WOLF, 5, 4, 4);
+            builder.addSpawn(EntityTypes.FOX, 4, 2, 4);
         });
 
         return new Biome.BiomeBuilder()
@@ -249,8 +248,8 @@ public final class WamBiomes {
         MobSpawnSettings spawnSettings = spawnSettings(builder -> {
             BiomeDefaultFeatures.commonSpawns(builder);
 
-            builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4));
-            builder.addSpawn(MobCategory.CREATURE, 4, new MobSpawnSettings.SpawnerData(EntityTypes.FOX, 2, 4));
+            builder.addSpawn(EntityTypes.WOLF, 5, 4, 4);
+            builder.addSpawn(EntityTypes.FOX, 4, 2, 4);
         });
         BiomeGenerationSettings generationSettings = generationSettings(builder -> {
             OverworldBiomes.globalOverworldGeneration(builder);
@@ -311,9 +310,9 @@ public final class WamBiomes {
         });
         MobSpawnSettings spawnSettings = spawnSettings(builder -> {
             BiomeDefaultFeatures.farmAnimals(builder);
-            builder.addSpawn(MobCategory.CREATURE, 8, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4))
-                .addSpawn(MobCategory.CREATURE, 4, new MobSpawnSettings.SpawnerData(EntityTypes.RABBIT, 2, 3))
-                .addSpawn(MobCategory.CREATURE, 8, new MobSpawnSettings.SpawnerData(EntityTypes.FOX, 2, 4));
+            builder.addSpawn(EntityTypes.WOLF, 8, 4, 4)
+                .addSpawn(EntityTypes.RABBIT, 4, 2, 3)
+                .addSpawn(EntityTypes.FOX, 8, 2, 4);
             BiomeDefaultFeatures.commonSpawns(builder);
         });
         return new Biome.BiomeBuilder()
