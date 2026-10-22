@@ -1,0 +1,8 @@
+{
+  "type": "woods_and_mires:shrub",
+  "base_height": 1,
+  "extra_height": 1,
+  "extra_height_chance": 0.7,
+  "leaves": "minecraft:birch_leaves",
+  "log": "minecraft:birch_log"
+}

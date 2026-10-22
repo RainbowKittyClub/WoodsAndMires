@@ -1,0 +1,36 @@
+{
+  "type": "woods_and_mires:fell_pond",
+  "border": {
+    "id": "minecraft:stone"
+  },
+  "bottom_block": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "minecraft:emerald_ore",
+        "weight": 1
+      },
+      {
+        "data": "minecraft:gold_ore",
+        "weight": 1
+      }
+    ]
+  },
+  "bottom_replace_chance": 0.08,
+  "depth": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 4,
+    "min_inclusive": 1
+  },
+  "fill_block": {
+    "id": "minecraft:water",
+    "properties": {
+      "level": "0"
+    }
+  },
+  "radius": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 5,
+    "min_inclusive": 2
+  }
+}

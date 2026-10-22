@@ -1,0 +1,47 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "woods_and_mires:giant_pine",
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:would_survive",
+          "state": "woods_and_mires:pine_sapling"
+        }
+      }
+    ]
+  },
+  "features": [
+    {
+      "chance": 0.15,
+      "feature": {
+        "feature": "woods_and_mires:pine",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "woods_and_mires:pine_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.1,
+      "feature": {
+        "feature": "woods_and_mires:pine_snag",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "woods_and_mires:pine_sapling"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "type": "minecraft:random_selector",
+  "default": {
+    "feature": "woods_and_mires:less_podzol_pine",
+    "placement": [
+      {
+        "type": "minecraft:block_predicate_filter",
+        "predicate": {
+          "type": "minecraft:would_survive",
+          "state": "woods_and_mires:pine_sapling"
+        }
+      }
+    ]
+  },
+  "features": [
+    {
+      "chance": 0.12,
+      "feature": {
+        "feature": "woods_and_mires:thin_pine_shrub",
+        "placement": [
+          {
+            "type": "minecraft:block_predicate_filter",
+            "predicate": {
+              "type": "minecraft:would_survive",
+              "state": "woods_and_mires:pine_sapling"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "chance": 0.1,
+      "feature": "minecraft:birch_bees_0002"
+    },
+    {
+      "chance": 0.1,
+      "feature": "minecraft:oak_bees_0002_leaf_litter"
+    },
+    {
+      "chance": 0.1,
+      "feature": "minecraft:fancy_oak_bees_0002_leaf_litter"
+    }
+  ]
+}
