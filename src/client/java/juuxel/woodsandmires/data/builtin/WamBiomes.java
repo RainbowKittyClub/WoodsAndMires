@@ -9,6 +9,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.biome.BiomeData;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.core.Holder;
@@ -156,7 +157,7 @@ public final class WamBiomes {
                     .foliageColorOverride(0x43C44F)
                     .build()
             )
-            .setAttribute(EnvironmentAttributes.SKY_COLOR, getSkyColor(temperature))
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(temperature)))
             .downfall(0.6f)
             .temperature(temperature)
             .generationSettings(generationSettings)
@@ -236,7 +237,7 @@ public final class WamBiomes {
                     .grassColorOverride(0xADA24C)
                     .build()
             )
-            .setAttribute(EnvironmentAttributes.SKY_COLOR, getSkyColor(0.6f))
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(0.6f)))
             .downfall(0.9f)
             .temperature(0.6f)
             .generationSettings(generationSettings)
@@ -264,7 +265,7 @@ public final class WamBiomes {
                     .waterColor(OverworldBiomes.NORMAL_WATER_COLOR)
                     .build()
             )
-            .setAttribute(EnvironmentAttributes.SKY_COLOR, getSkyColor(temperature))
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(temperature)))
             .downfall(0.7f)
             .temperature(temperature)
             .generationSettings(generationSettings)
@@ -321,7 +322,7 @@ public final class WamBiomes {
                     .waterColor(OverworldBiomes.NORMAL_WATER_COLOR)
                     .build()
             )
-            .setAttribute(EnvironmentAttributes.SKY_COLOR, getSkyColor(-0.2f))
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(-0.2f)))
             .downfall(0.8f)
             .temperature(-0.2f)
             .generationSettings(generationSettings)
