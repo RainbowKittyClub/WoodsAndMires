@@ -18,10 +18,10 @@ import net.minecraft.world.item.DoubleHighBlockItem;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -43,7 +43,7 @@ public final class WamBlocks {
     public static final Block PINE_WALL_HANGING_SIGN = register(WamBlockIds.PINE_WALL_HANGING_SIGN, copyWoodSettings(Blocks.OAK_WALL_HANGING_SIGN), settings -> new WallHangingSignBlock(WamWoodTypes.PINE, settings));
     // Supplier for same reason as above
     public static final Block PINE_LEAVES = register(WamBlockItemIds.PINE_LEAVES, Blocks.leavesProperties(SoundType.GRASS), s -> new TintedParticleLeavesBlock(0.01f, s));
-    public static final Block PINE_SAPLING = register(WamBlockItemIds.PINE_SAPLING, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING), settings -> new SaplingBlock(new TreeGrower("pine", Optional.empty(), Optional.of(WamConfiguredFeatureKeys.PINE_FROM_SAPLING), Optional.empty()), settings));
+    public static final Block PINE_SAPLING = register(WamBlockItemIds.PINE_SAPLING, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING), settings -> new SaplingBlock(new TreeGrower("pine", WeightedList.of(WamConfiguredFeatureKeys.PINE_FROM_SAPLING), WeightedList.of(), WeightedList.of(), WamConfiguredFeatureKeys.PINE_FROM_SAPLING), settings));
     public static final Block POTTED_PINE_SAPLING = register(WamBlockIds.POTTED_PINE_SAPLING, Blocks.flowerPotProperties(), settings -> new FlowerPotBlock(PINE_SAPLING, settings));
     public static final Block PINE_WOOD = register(WamBlockItemIds.PINE_WOOD, copyWoodSettings(Blocks.OAK_WOOD), RotatedPillarBlock::new);
     public static final Block AGED_PINE_WOOD = register(WamBlockItemIds.AGED_PINE_WOOD, BlockBehaviour.Properties.ofFullCopy(PINE_WOOD)
