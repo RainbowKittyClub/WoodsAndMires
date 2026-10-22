@@ -27,7 +27,7 @@ public final class WamDataGenerator implements DataGeneratorEntrypoint {
 
     @Override
     public void buildRegistry(RegistrySetBuilder registryBuilder) {
-        registryBuilder.add(Registries.CONFIGURED_FEATURE, WamConfiguredFeatures::register);
+        registryBuilder.add(Registries.FEATURE, WamConfiguredFeatures::register);
         registryBuilder.add(Registries.PLACED_FEATURE, WamPlacedFeatures::register);
         registryBuilder.add(Registries.BIOME, WamBiomes::register);
     }

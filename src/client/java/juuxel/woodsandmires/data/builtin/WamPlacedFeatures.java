@@ -12,7 +12,7 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.*;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
@@ -133,8 +133,8 @@ public final class WamPlacedFeatures {
     }
 
     private static void register(BootstrapContext<PlacedFeature> registerable, ResourceKey<PlacedFeature> key,
-                                 ResourceKey<ConfiguredFeature<?, ?>> feature, List<PlacementModifier> modifiers) {
-        HolderGetter<ConfiguredFeature<?, ?>> lookup = registerable.lookup(Registries.CONFIGURED_FEATURE);
+                                 ResourceKey<Feature> feature, List<PlacementModifier> modifiers) {
+        HolderGetter<Feature> lookup = registerable.lookup(Registries.FEATURE);
         PlacedFeature placed = new PlacedFeature(lookup.getOrThrow(feature), modifiers);
         registerable.register(key, placed);
     }
