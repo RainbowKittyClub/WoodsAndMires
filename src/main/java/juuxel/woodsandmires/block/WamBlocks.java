@@ -4,7 +4,7 @@ import juuxel.woodsandmires.feature.WamConfiguredFeatureKeys;
 import juuxel.woodsandmires.references.WamBlockIds;
 import juuxel.woodsandmires.references.WamBlockItemIds;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
-import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
+import net.fabricmc.fabric.api.item.v1.BlockTransformerHelper;
 import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -83,10 +83,10 @@ public final class WamBlocks {
         fbr.add(PINE_FENCE, 5, 20);
         fbr.add(PINE_FENCE_GATE, 5, 20);
 
-        StrippableBlockRegistry.register(PINE_LOG, STRIPPED_PINE_LOG);
-        StrippableBlockRegistry.register(AGED_PINE_LOG, STRIPPED_PINE_LOG);
-        StrippableBlockRegistry.register(PINE_WOOD, STRIPPED_PINE_WOOD);
-        StrippableBlockRegistry.register(AGED_PINE_WOOD, STRIPPED_PINE_WOOD);
+        BlockTransformerHelper.registerStripping(PINE_LOG, STRIPPED_PINE_LOG);
+        BlockTransformerHelper.registerStripping(AGED_PINE_LOG, STRIPPED_PINE_LOG);
+        BlockTransformerHelper.registerStripping(PINE_WOOD, STRIPPED_PINE_WOOD);
+        BlockTransformerHelper.registerStripping(AGED_PINE_WOOD, STRIPPED_PINE_WOOD);
         BlockEntityTypes.SIGN.addValidBlock(PINE_SIGN);
         BlockEntityTypes.SIGN.addValidBlock(PINE_WALL_SIGN);
         BlockEntityTypes.HANGING_SIGN.addValidBlock(PINE_HANGING_SIGN);
