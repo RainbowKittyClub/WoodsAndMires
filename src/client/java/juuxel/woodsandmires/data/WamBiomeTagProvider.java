@@ -40,6 +40,21 @@ public final class WamBiomeTagProvider extends FabricTagsProvider<Biome> {
         builder(BiomeTags.HAS_PILLAGER_OUTPOST)
             .add(WamBiomeKeys.PINE_FOREST)
             .add(WamBiomeKeys.PINY_GROVE);
+        // Abandoned camps of the vanilla biomes the WaM region replaces
+        builder(BiomeTags.HAS_ABANDONED_CAMP_FOREST)
+            .add(WamBiomeKeys.LUSH_PINE_FOREST);
+        builder(BiomeTags.HAS_ABANDONED_CAMP_OLD_GROWTH_PINE_TAIGA)
+            .add(WamBiomeKeys.OLD_GROWTH_PINE_FOREST);
+        builder(BiomeTags.HAS_ABANDONED_CAMP_OLD_GROWTH_SPRUCE_TAIGA)
+            .add(WamBiomeKeys.OLD_GROWTH_PINE_FOREST);
+        builder(BiomeTags.HAS_ABANDONED_CAMP_SNOWY_TAIGA)
+            .add(WamBiomeKeys.SNOWY_PINE_FOREST);
+        builder(BiomeTags.HAS_ABANDONED_CAMP_SWAMP)
+            .add(WamBiomeKeys.PINE_MIRE);
+        builder(BiomeTags.HAS_ABANDONED_CAMP_TAIGA)
+            .add(WamBiomeKeys.PINE_FOREST);
+        builder(BiomeTags.HAS_ABANDONED_CAMP_WINDSWEPT_FOREST)
+            .add(WamBiomeKeys.SNOWY_PINE_FOREST);
 
         // Common tags
         generateOverworld(ConventionalBiomeTags.IS_OVERWORLD);
