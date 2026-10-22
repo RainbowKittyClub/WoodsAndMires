@@ -19,7 +19,7 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
@@ -332,7 +332,7 @@ public final class WamBiomes {
 
     private BiomeGenerationSettings generationSettings(Consumer<WamGenerationSettingsBuilder> configurator) {
         HolderGetter<PlacedFeature> placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
-        HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = registerable.lookup(Registries.CONFIGURED_CARVER);
+        HolderGetter<WorldCarver> configuredCarvers = registerable.lookup(Registries.CARVER);
         WamGenerationSettingsBuilder builder = new WamGenerationSettingsBuilder(placedFeatures, configuredCarvers);
         configurator.accept(builder);
         return builder.build(featureGraph);
