@@ -1,18 +1,18 @@
 package juuxel.woodsandmires.feature;
 
+import com.mojang.serialization.MapCodec;
 import juuxel.woodsandmires.WoodsAndMires;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.Registry;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
 
 public final class WamFeatures {
-    public static final Feature<ShrubFeatureConfig> SHRUB = new ShrubFeature(ShrubFeatureConfig.CODEC);
-    public static final Feature<NoneFeatureConfiguration> MIRE_PONDS = new MirePondsFeature(NoneFeatureConfiguration.CODEC);
-    public static final Feature<MeadowFeatureConfig> MEADOW = new MeadowFeature(MeadowFeatureConfig.CODEC);
-    public static final Feature<FellPondFeatureConfig> FELL_POND = new FellPondFeature(FellPondFeatureConfig.CODEC);
-    public static final Feature<FallenLogFeatureConfig> FALLEN_LOG = new FallenLogFeature(FallenLogFeatureConfig.CODEC);
-    public static final Feature<FrozenTreasureFeatureConfig> FROZEN_TREASURE = new FrozenTreasureFeature(FrozenTreasureFeatureConfig.CODEC);
+    public static final MapCodec<ShrubFeature> SHRUB = ShrubFeature.CODEC;
+    public static final MapCodec<MirePondsFeature> MIRE_PONDS = MirePondsFeature.CODEC;
+    public static final MapCodec<MeadowFeature> MEADOW = MeadowFeature.CODEC;
+    public static final MapCodec<FellPondFeature> FELL_POND = FellPondFeature.CODEC;
+    public static final MapCodec<FallenLogFeature> FALLEN_LOG = FallenLogFeature.CODEC;
+    public static final MapCodec<FrozenTreasureFeature> FROZEN_TREASURE = FrozenTreasureFeature.CODEC;
 
     private WamFeatures() {
     }
@@ -26,7 +26,7 @@ public final class WamFeatures {
         register("frozen_treasure", FROZEN_TREASURE);
     }
 
-    private static void register(String id, Feature<?> feature) {
-        Registry.register(BuiltInRegistries.FEATURE, WoodsAndMires.id(id), feature);
+    private static void register(String id, MapCodec<? extends Feature> codec) {
+        Registry.register(BuiltInRegistries.FEATURE_TYPE, WoodsAndMires.id(id), codec);
     }
 }

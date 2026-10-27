@@ -4,13 +4,18 @@ import juuxel.woodsandmires.WoodsAndMires;
 import juuxel.woodsandmires.biome.WamBiomeKeys;
 import juuxel.woodsandmires.config.WamConfig;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Noises;
-import net.minecraft.world.level.levelgen.SurfaceRules;
-import net.minecraft.data.worldgen.SurfaceRuleData;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.material.condition.MaterialCondition;
+import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
+import net.minecraft.world.level.levelgen.placement.CaveSurface;
+import terrablender.api.MaterialRuleManager;
 import terrablender.api.Regions;
-import terrablender.api.SurfaceRuleManager;
 import terrablender.api.TerraBlenderApi;
 
 public final class WoodsAndMiresTb implements TerraBlenderApi {
@@ -18,54 +23,64 @@ public final class WoodsAndMiresTb implements TerraBlenderApi {
     public void onTerraBlenderInitialized() {
         WamConfig.load();
         Regions.register(new WamRegion(WoodsAndMires.id("biomes"), WamConfig.biomeRegionWeight));
-        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, WoodsAndMires.ID, WoodsAndMiresTb::createSurfaceRule);
+        MaterialRuleManager.addRules(MaterialRuleManager.RuleCategory.OVERWORLD, WoodsAndMires.ID, WoodsAndMiresTb::createSurfaceRule);
     }
 
-    private static SurfaceRules.RuleSource createSurfaceRule(HolderGetter<Biome> biomes) {
-        SurfaceRules.ConditionSource hasWater = SurfaceRules.waterBlockCheck(0, 0);
-        SurfaceRules.RuleSource stone = SurfaceRuleData.makeStateRule(Blocks.STONE);
-        SurfaceRules.RuleSource snowBlock = SurfaceRuleData.makeStateRule(Blocks.SNOW_BLOCK);
-        SurfaceRules.RuleSource powderSnow = SurfaceRules.ifTrue(
-            SurfaceRules.noiseCondition2d(Noises.POWDER_SNOW, 0.35, 0.6),
-            SurfaceRules.ifTrue(hasWater, SurfaceRuleData.makeStateRule(Blocks.POWDER_SNOW))
+    private static MaterialRule createSurfaceRule(RegistryAccess registries) {
+        HolderGetter<Biome> biomes = registries.lookupOrThrow(Registries.BIOME);
+        MaterialCondition hasWater = MaterialRules.waterBlockCheck(0, 0);
+        MaterialRule stone = makeStateRule(Blocks.STONE);
+        MaterialRule snowBlock = makeStateRule(Blocks.SNOW_BLOCK);
+        MaterialRule powderSnow = MaterialRules.ifTrue(
+            MaterialRules.noiseCondition2d(Noises.POWDER_SNOW, 0.35, 0.6),
+            MaterialRules.ifTrue(hasWater, makeStateRule(Blocks.POWDER_SNOW))
         );
 
-        return SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.sequence(
-            SurfaceRules.ifTrue(
-                SurfaceRules.isBiome(biomes, WamBiomeKeys.FELL),
-                SurfaceRules.ifTrue(SurfaceRuleData.surfaceNoiseAbove(1.75), stone)
+        return MaterialRules.ifTrue(MaterialRules.stoneDepthCheck(0, false, CaveSurface.FLOOR), MaterialRules.sequence(
+            MaterialRules.ifTrue(
+                MaterialRules.isBiome(biomes, WamBiomeKeys.FELL),
+                MaterialRules.ifTrue(surfaceNoiseAbove(1.75), stone)
             ),
-            SurfaceRules.ifTrue(
-                SurfaceRules.isBiome(biomes, WamBiomeKeys.OLD_GROWTH_PINE_FOREST),
-                SurfaceRules.ifTrue(
-                    SurfaceRuleData.surfaceNoiseAbove(1.75),
-                    SurfaceRuleData.makeStateRule(Blocks.COARSE_DIRT)
+            MaterialRules.ifTrue(
+                MaterialRules.isBiome(biomes, WamBiomeKeys.OLD_GROWTH_PINE_FOREST),
+                MaterialRules.ifTrue(
+                    surfaceNoiseAbove(1.75),
+                    makeStateRule(Blocks.COARSE_DIRT)
                 )
             ),
-            SurfaceRules.ifTrue(
-                SurfaceRules.isBiome(biomes, WamBiomeKeys.PINY_GROVE),
-                SurfaceRules.sequence(
+            MaterialRules.ifTrue(
+                MaterialRules.isBiome(biomes, WamBiomeKeys.PINY_GROVE),
+                MaterialRules.sequence(
                     powderSnow,
-                    SurfaceRules.ifTrue(hasWater, snowBlock),
-                    SurfaceRuleData.makeStateRule(Blocks.DIRT)
+                    MaterialRules.ifTrue(hasWater, snowBlock),
+                    makeStateRule(Blocks.DIRT)
                 )
             ),
-            SurfaceRules.ifTrue(
-                SurfaceRules.isBiome(biomes, WamBiomeKeys.SNOWY_PINE_FOREST),
-                SurfaceRules.sequence(
-                    SurfaceRules.ifTrue(SurfaceRules.steep(), stone),
+            MaterialRules.ifTrue(
+                MaterialRules.isBiome(biomes, WamBiomeKeys.SNOWY_PINE_FOREST),
+                MaterialRules.sequence(
+                    MaterialRules.ifTrue(MaterialRules.steep(), stone),
                     powderSnow,
-                    SurfaceRules.ifTrue(hasWater, snowBlock)
+                    MaterialRules.ifTrue(hasWater, snowBlock)
                 )
             ),
-            SurfaceRules.ifTrue(
-                SurfaceRules.isBiome(biomes, WamBiomeKeys.SNOWY_FELL),
-                SurfaceRules.sequence(
-                    SurfaceRules.ifTrue(SurfaceRuleData.surfaceNoiseAbove(1.75), stone),
-                    SurfaceRules.ifTrue(SurfaceRules.steep(), stone),
-                    SurfaceRules.ifTrue(hasWater, snowBlock)
+            MaterialRules.ifTrue(
+                MaterialRules.isBiome(biomes, WamBiomeKeys.SNOWY_FELL),
+                MaterialRules.sequence(
+                    MaterialRules.ifTrue(surfaceNoiseAbove(1.75), stone),
+                    MaterialRules.ifTrue(MaterialRules.steep(), stone),
+                    MaterialRules.ifTrue(hasWater, snowBlock)
                 )
             )
         ));
+    }
+
+    private static MaterialRule makeStateRule(Block block) {
+        return MaterialRules.state(block.defaultBlockState());
+    }
+
+    // Vanilla's private OverworldMaterialRules.surfaceNoiseAbove.
+    private static MaterialCondition surfaceNoiseAbove(double threshold) {
+        return MaterialRules.noiseCondition2d(Noises.SURFACE, threshold / 8.25, Double.MAX_VALUE);
     }
 }

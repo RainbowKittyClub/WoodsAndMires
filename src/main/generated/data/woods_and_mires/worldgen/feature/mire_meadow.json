@@ -1,0 +1,17 @@
+{
+  "type": "woods_and_mires:meadow",
+  "chance": 0.5,
+  "state_provider": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "minecraft:short_grass",
+        "weight": 5
+      },
+      {
+        "data": "minecraft:fern",
+        "weight": 1
+      }
+    ]
+  }
+}

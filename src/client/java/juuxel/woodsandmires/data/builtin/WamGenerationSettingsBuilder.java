@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.DefaultEdge;
@@ -19,7 +19,7 @@ public class WamGenerationSettingsBuilder extends BiomeGenerationSettings.Builde
         new EnumMap<>(GenerationStep.Decoration.class);
     private final HolderGetter<PlacedFeature> placedFeatureLookup;
 
-    public WamGenerationSettingsBuilder(HolderGetter<PlacedFeature> placedFeatureLookup, HolderGetter<ConfiguredWorldCarver<?>> configuredCarverLookup) {
+    public WamGenerationSettingsBuilder(HolderGetter<PlacedFeature> placedFeatureLookup, HolderGetter<WorldCarver> configuredCarverLookup) {
         super(placedFeatureLookup, configuredCarverLookup);
         this.placedFeatureLookup = placedFeatureLookup;
     }

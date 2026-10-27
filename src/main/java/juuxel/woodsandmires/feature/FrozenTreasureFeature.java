@@ -1,37 +1,59 @@
 package juuxel.woodsandmires.feature;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.RandomizableContainer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
-public final class FrozenTreasureFeature extends Feature<FrozenTreasureFeatureConfig> {
-    public FrozenTreasureFeature(Codec<FrozenTreasureFeatureConfig> configCodec) {
-        super(configCodec);
+public record FrozenTreasureFeature(
+    Holder<BlockStateProvider> ice,
+    IntProvider height,
+    IntProvider radius,
+    ResourceKey<LootTable> lootTable
+) implements Feature {
+    public static final MapCodec<FrozenTreasureFeature> CODEC = RecordCodecBuilder.mapCodec(builder ->
+        builder.group(
+            BlockStateProvider.CODEC.fieldOf("ice").forGetter(FrozenTreasureFeature::ice),
+            IntProviders.POSITIVE_CODEC.fieldOf("height").forGetter(FrozenTreasureFeature::height),
+            IntProviders.POSITIVE_CODEC.fieldOf("radius").forGetter(FrozenTreasureFeature::radius),
+            ResourceKey.codec(Registries.LOOT_TABLE).fieldOf("loot_table").forGetter(FrozenTreasureFeature::lootTable)
+        ).apply(builder, FrozenTreasureFeature::new)
+    );
+
+    public FrozenTreasureFeature(BlockStateProvider ice, IntProvider height, IntProvider radius, ResourceKey<LootTable> lootTable) {
+        this(Holder.direct(ice), height, radius, lootTable);
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<FrozenTreasureFeatureConfig> context) {
-        FrozenTreasureFeatureConfig config = context.config();
-        WorldGenLevel world = context.level();
-        BlockPos origin = context.origin();
-        var random = context.random();
-        int height = config.height().sample(random);
-        int semiMajor = config.radius().sample(random);
-        int semiMinor = config.radius().sample(random);
+    public MapCodec<FrozenTreasureFeature> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
+        int height = this.height.sample(random);
+        int semiMajor = radius.sample(random);
+        int semiMinor = radius.sample(random);
         BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos();
         int chestY = height / 3;
 
@@ -58,9 +80,9 @@ public final class FrozenTreasureFeature extends Feature<FrozenTreasureFeatureCo
                         BlockState chest = Blocks.CHEST.defaultBlockState()
                             .setValue(ChestBlock.FACING, Direction.Plane.HORIZONTAL.getRandomDirection(random));
                         setBlock(world, mut, chest);
-                        RandomizableContainer.setBlockEntityLootTable(world, random, mut, config.lootTable());
+                        RandomizableContainer.setBlockEntityLootTable(world, random, mut, lootTable);
                     } else if (FellPondFeature.isInsideEllipse(x, z, semiMajorSq, semiMinorSq, 0)) {
-                        setBlock(world, mut, config.ice().getState(world, random, mut));
+                        setBlock(world, mut, ice.value().getState(world, random, mut));
                     }
                 }
             }

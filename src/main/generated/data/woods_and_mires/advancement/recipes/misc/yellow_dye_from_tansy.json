@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "woods_and_mires:yellow_dye_from_tansy"
+        "recipes": "woods_and_mires:yellow_dye_from_tansy"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

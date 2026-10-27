@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "woods_and_mires:pink_dye_from_heather"
+        "recipes": "woods_and_mires:pink_dye_from_heather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

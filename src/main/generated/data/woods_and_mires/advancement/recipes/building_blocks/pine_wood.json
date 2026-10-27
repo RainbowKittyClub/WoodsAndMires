@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "woods_and_mires:pine_wood"
+        "recipes": "woods_and_mires:pine_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

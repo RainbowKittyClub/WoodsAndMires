@@ -57,7 +57,7 @@ public final class AgedTrunkTreeDecorator extends TreeDecorator {
         for (BlockPos pos : generator.logs()) {
             if (pos.getY() > midY) {
                 break;
-            } else if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.DIRT))) {
+            } else if (generator.level().isStateAtPosition(pos, blockState -> blockState.is(BlockTags.SUBSTRATE_OVERWORLD))) {
                 // Don't replace the dirt underneath the trunk
                 continue;
             }

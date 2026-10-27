@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "woods_and_mires:magenta_dye_from_fireweed"
+        "recipes": "woods_and_mires:magenta_dye_from_fireweed"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

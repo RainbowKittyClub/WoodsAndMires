@@ -7,10 +7,13 @@ import juuxel.woodsandmires.item.WamItemTags;
 import juuxel.woodsandmires.item.WamItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.data.BlockFamilies;
 import net.minecraft.data.BlockFamily;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.Items;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -43,8 +46,9 @@ public final class WamRecipeProvider extends FabricRecipeProvider {
         super(output, registriesFuture);
     }
 
-    protected RecipeProvider createRecipeProvider(HolderLookup.Provider wrapperLookup, RecipeOutput exporter) {
-        return new RecipeProvider(wrapperLookup, exporter) {
+    @Override
+    protected RecipeProvider createRecipeProvider(HolderLookup.Provider wrapperLookup, BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+        return new RecipeProvider(recipeOutput, advancementOutput) {
             public void offerShapelessRecipe(RecipeOutput exporter, ItemLike output, ItemLike input, @Nullable String group, int outputCount) {
                 shapeless(RecipeCategory.MISC, output, outputCount)
                     .requires(input)

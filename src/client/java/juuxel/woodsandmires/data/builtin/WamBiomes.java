@@ -1,6 +1,5 @@
 package juuxel.woodsandmires.data.builtin;
 
-import com.mojang.serialization.Lifecycle;
 import juuxel.woodsandmires.biome.WamBiomeKeys;
 import juuxel.woodsandmires.feature.WamPlacedFeatureKeys;
 import net.minecraft.core.HolderGetter;
@@ -10,9 +9,9 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.biome.BiomeData;
 import net.minecraft.data.worldgen.biome.OverworldBiomes;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.core.Holder;
 import net.minecraft.world.attribute.EnvironmentAttributes;
 import net.minecraft.world.level.biome.Biome;
@@ -20,7 +19,7 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
@@ -29,6 +28,7 @@ import org.jgrapht.graph.DirectedAcyclicGraph;
 import org.jgrapht.graph.GraphCycleProhibitedException;
 
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 public final class WamBiomes {
     // See Biome.doesNotSnow (1.19.4)
@@ -61,7 +61,7 @@ public final class WamBiomes {
     private void initGraph() {
         record CapturingRegisterable<T>(BootstrapContext<?> parent, Consumer<T> sink) implements BootstrapContext<T> {
             @Override
-            public Holder.Reference<T> register(ResourceKey<T> key, T value, Lifecycle lifecycle) {
+            public Holder.Reference<T> register(ResourceKey<T> key, T value) {
                 sink.accept(value);
                 return null;
             }
@@ -69,6 +69,12 @@ public final class WamBiomes {
             @Override
             public <S> HolderGetter<S> lookup(ResourceKey<? extends Registry<? extends S>> registryRef) {
                 return parent.lookup(registryRef);
+            }
+
+            @Override
+            @SuppressWarnings("deprecation")
+            public <S> Stream<Holder.Reference<S>> listContextElements(ResourceKey<? extends Registry<? extends S>> registryRef) {
+                return parent.listContextElements(registryRef);
             }
         }
 
@@ -140,8 +146,8 @@ public final class WamBiomes {
             BiomeDefaultFeatures.farmAnimals(builder);
             BiomeDefaultFeatures.commonSpawns(builder);
 
-            builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4));
-            builder.addSpawn(MobCategory.CREATURE, 4, new MobSpawnSettings.SpawnerData(EntityTypes.FOX, 2, 4));
+            builder.addSpawn(EntityTypes.WOLF, 5, 4, 4);
+            builder.addSpawn(EntityTypes.FOX, 4, 2, 4);
         });
 
         return new Biome.BiomeBuilder()
@@ -151,7 +157,7 @@ public final class WamBiomes {
                     .foliageColorOverride(0x43C44F)
                     .build()
             )
-            .setAttribute(EnvironmentAttributes.SKY_COLOR, getSkyColor(temperature))
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(temperature)))
             .downfall(0.6f)
             .temperature(temperature)
             .generationSettings(generationSettings)
@@ -231,7 +237,7 @@ public final class WamBiomes {
                     .grassColorOverride(0xADA24C)
                     .build()
             )
-            .setAttribute(EnvironmentAttributes.SKY_COLOR, getSkyColor(0.6f))
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(0.6f)))
             .downfall(0.9f)
             .temperature(0.6f)
             .generationSettings(generationSettings)
@@ -243,8 +249,8 @@ public final class WamBiomes {
         MobSpawnSettings spawnSettings = spawnSettings(builder -> {
             BiomeDefaultFeatures.commonSpawns(builder);
 
-            builder.addSpawn(MobCategory.CREATURE, 5, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4));
-            builder.addSpawn(MobCategory.CREATURE, 4, new MobSpawnSettings.SpawnerData(EntityTypes.FOX, 2, 4));
+            builder.addSpawn(EntityTypes.WOLF, 5, 4, 4);
+            builder.addSpawn(EntityTypes.FOX, 4, 2, 4);
         });
         BiomeGenerationSettings generationSettings = generationSettings(builder -> {
             OverworldBiomes.globalOverworldGeneration(builder);
@@ -259,7 +265,7 @@ public final class WamBiomes {
                     .waterColor(OverworldBiomes.NORMAL_WATER_COLOR)
                     .build()
             )
-            .setAttribute(EnvironmentAttributes.SKY_COLOR, getSkyColor(temperature))
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(temperature)))
             .downfall(0.7f)
             .temperature(temperature)
             .generationSettings(generationSettings)
@@ -305,9 +311,9 @@ public final class WamBiomes {
         });
         MobSpawnSettings spawnSettings = spawnSettings(builder -> {
             BiomeDefaultFeatures.farmAnimals(builder);
-            builder.addSpawn(MobCategory.CREATURE, 8, new MobSpawnSettings.SpawnerData(EntityTypes.WOLF, 4, 4))
-                .addSpawn(MobCategory.CREATURE, 4, new MobSpawnSettings.SpawnerData(EntityTypes.RABBIT, 2, 3))
-                .addSpawn(MobCategory.CREATURE, 8, new MobSpawnSettings.SpawnerData(EntityTypes.FOX, 2, 4));
+            builder.addSpawn(EntityTypes.WOLF, 8, 4, 4)
+                .addSpawn(EntityTypes.RABBIT, 4, 2, 3)
+                .addSpawn(EntityTypes.FOX, 8, 2, 4);
             BiomeDefaultFeatures.commonSpawns(builder);
         });
         return new Biome.BiomeBuilder()
@@ -316,7 +322,7 @@ public final class WamBiomes {
                     .waterColor(OverworldBiomes.NORMAL_WATER_COLOR)
                     .build()
             )
-            .setAttribute(EnvironmentAttributes.SKY_COLOR, getSkyColor(-0.2f))
+            .setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(getSkyColor(-0.2f)))
             .downfall(0.8f)
             .temperature(-0.2f)
             .generationSettings(generationSettings)
@@ -326,7 +332,7 @@ public final class WamBiomes {
 
     private BiomeGenerationSettings generationSettings(Consumer<WamGenerationSettingsBuilder> configurator) {
         HolderGetter<PlacedFeature> placedFeatures = registerable.lookup(Registries.PLACED_FEATURE);
-        HolderGetter<ConfiguredWorldCarver<?>> configuredCarvers = registerable.lookup(Registries.CONFIGURED_CARVER);
+        HolderGetter<WorldCarver> configuredCarvers = registerable.lookup(Registries.CARVER);
         WamGenerationSettingsBuilder builder = new WamGenerationSettingsBuilder(placedFeatures, configuredCarvers);
         configurator.accept(builder);
         return builder.build(featureGraph);

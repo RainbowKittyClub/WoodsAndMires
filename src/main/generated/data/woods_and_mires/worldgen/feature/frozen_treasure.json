@@ -1,0 +1,23 @@
+{
+  "type": "woods_and_mires:frozen_treasure",
+  "height": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 7,
+    "min_inclusive": 5
+  },
+  "ice": {
+    "type": "minecraft:weighted",
+    "entries": [
+      {
+        "data": "minecraft:packed_ice",
+        "weight": 3
+      },
+      {
+        "data": "minecraft:blue_ice",
+        "weight": 1
+      }
+    ]
+  },
+  "loot_table": "woods_and_mires:chests/frozen_treasure",
+  "radius": 2
+}

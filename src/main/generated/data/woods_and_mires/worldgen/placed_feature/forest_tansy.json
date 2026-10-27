@@ -2,6 +2,19 @@
   "feature": "woods_and_mires:forest_tansy",
   "placement": [
     {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:clamped",
+        "max_inclusive": 1,
+        "min_inclusive": 0,
+        "source": {
+          "type": "minecraft:uniform",
+          "max_inclusive": 1,
+          "min_inclusive": -4
+        }
+      }
+    },
+    {
       "type": "minecraft:rarity_filter",
       "chance": 7
     },
@@ -17,20 +30,26 @@
     },
     {
       "type": "minecraft:count",
-      "count": 24
+      "count": 96
     },
     {
-      "type": "minecraft:random_offset",
-      "xz_spread": {
+      "type": "minecraft:offset",
+      "x": {
         "type": "minecraft:trapezoid",
         "max": 7,
         "min": -7,
         "plateau": 0
       },
-      "y_spread": {
+      "y": {
         "type": "minecraft:trapezoid",
         "max": 3,
         "min": -3,
+        "plateau": 0
+      },
+      "z": {
+        "type": "minecraft:trapezoid",
+        "max": 7,
+        "min": -7,
         "plateau": 0
       }
     },
@@ -45,9 +64,7 @@
           },
           {
             "type": "minecraft:would_survive",
-            "state": {
-              "Name": "woods_and_mires:tansy"
-            }
+            "state": "woods_and_mires:tansy"
           }
         ]
       }
